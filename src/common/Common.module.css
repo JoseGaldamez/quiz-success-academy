@@ -1,0 +1,53 @@
+.top-orange {
+    background-color: var(--primary-orange);
+    padding: 1rem;
+}
+
+.top-orange .list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 20px;
+    list-style: none;
+    color: white;
+}
+
+.menu-item {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+}
+.menu-item svg {
+    margin-right: 5px;
+}
+
+.menu-blue {
+    background-color: var(--primary-blue);
+    padding: 1rem;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1080px;
+    margin: 0px auto;
+    align-items: center;
+    padding: 0 20px;
+    list-style: none;
+    color: white;
+}
+
+.LogoPrincipal {
+    width: 150px;
+}
+
+.contactButton {
+    background-color: var(--secondary-blue);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
