@@ -1,0 +1,125 @@
+.section {
+    background-image: url("https://successacademyhn.com/wp-content/uploads/2023/02/bgs1.3.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 5rem;
+    padding-top: 5rem;
+}
+
+.section div {
+    width: 30%;
+    object-fit: cover;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: var(--primary-orange);
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+}
+
+.title {
+    font-size: 3.5rem;
+    line-height: 4.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+    font-weight: 900;
+}
+.titleUnderline {
+    border-bottom: solid 5px var(--primary-orange);
+}
+
+.info {
+    font-size: 1.1rem;
+    color: var(--primary-blue);
+    margin-bottom: 2rem;
+}
+
+.buttonStart {
+    background-color: var(--secondary-blue);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+
+.buttonStart:hover {
+    background-color: var(--primary-orange);
+}
+
+.testContentSection {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 5rem 0;
+    text-align: center;
+}
+
+.testContentSection h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.testContentSection h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-orange);
+}
+
+.testElements {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.testElements article {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 46%;
+}
+
+.testElements article h4 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.requestAccessButton {
+    background-color: var(--primary-orange);
+    color: white;
+    padding: 1rem 1rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 350px;
+    margin: 40px auto;
+    display: block;
+    text-align: center;
+}
+.requestAccessButton:hover {
+    background-color: var(--secondary-orange);
+}
+
+.pricesSection {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    border-top: solid 5px var(--primary-orange);
+}
