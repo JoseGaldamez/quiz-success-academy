@@ -10,12 +10,6 @@ export const TopBar = () => {
         <div className={styles['top-orange']}>
             <ul className={styles['list']}>
                 <li className={styles['menu-item']}>
-                    <ImLocation2 />
-                    Plaza universitaria, frente a Unah-VS, SPS</li>
-                <li className={styles['menu-item']}>
-                    <ImLocation2 />
-                    Edificio Honduplaza, 2do Nivel, El Progreso, Yoro</li>
-                <li className={styles['menu-item']}>
                     <ImMail4 />
                     info.cursos@successacademyhn.com</li>
                 <li className={styles['menu-item']}>
