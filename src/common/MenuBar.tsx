@@ -3,7 +3,11 @@ import React from 'react'
 import styles from "./Common.module.css";
 import Link from 'next/link';
 
-export const MenuBar = () => {
+interface IMenuBarProps {
+    showRequestAccessButton?: boolean;
+}
+
+export const MenuBar = ({ showRequestAccessButton = true }: IMenuBarProps) => {
     return (
         <div className={styles['menu-blue']} >
             <section className={styles.menu}>
@@ -13,9 +17,13 @@ export const MenuBar = () => {
                         <img className={styles.LogoPrincipal} src="https://successacademyhn.com/wp-content/uploads/2023/02/logo_succress-blanco-copia.png" alt="logo" />
                     </Link>
                 </span>
-                <Link href={'/request-access'} className={styles.contactButton}>
-                    Solicitar acceso
-                </Link>
+                {
+                    showRequestAccessButton && (
+                        <Link href={'/request-access'} className={styles.contactButton}>
+                            Solicitar acceso
+                        </Link>
+                    )
+                }
             </section>
         </div>
     )
