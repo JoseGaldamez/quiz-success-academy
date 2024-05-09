@@ -18,6 +18,8 @@ const PlacementTest = () => {
     const router = useRouter();
 
     useEffect(() => {
+        if (testCurrentUser.userCode === '') router.push('/');
+
         getQuestions();
     }, []);
 
