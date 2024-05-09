@@ -1,13 +1,41 @@
 'use client';
 
 import { MenuBar } from '@/common/MenuBar'
-import { useAppSelector } from '@/lib/store';
-import React, { useState } from 'react'
+import { SET_LIST_QUESTIONS_STATE } from '@/lib/slices/questions';
+import { useAppDispatch, useAppSelector } from '@/lib/store';
+import { getAllQuestions } from '@/services/question.service';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
 const PlacementTest = () => {
 
+    const dispatch = useAppDispatch();
+
     const testCurrentUser = useAppSelector((state) => state.testCurrentUser);
     const [checked, setChecked] = useState<Boolean>();
+    const [questionsList, setQuestionsList] = useState<any>();
+
+    const router = useRouter();
+
+    useEffect(() => {
+        getQuestions();
+    }, []);
+
+    const getQuestions = async () => {
+        const questions = await getAllQuestions();
+        console.log(questions);
+        setQuestionsList(questions);
+    }
+
+    const handleClickStartQuiz = () => {
+        console.log('Start Quiz');
+        if (!checked) return;
+
+        dispatch(SET_LIST_QUESTIONS_STATE({ list: questionsList }));
+
+        // Redirect to the quiz page
+        router.push(`/${testCurrentUser.userCode}/quiz`);
+    }
 
     return (
         <div>
@@ -97,7 +125,7 @@ const PlacementTest = () => {
                     <label className='ml-2 text-xl' htmlFor="acceptPlacementCheck">I agree and accept the conditions.</label>
                 </p>
 
-                <button disabled={!checked} className='bg-blue-500 disabled:bg-slate-600 hover:bg-blue-700 text-lg text-white font-bold py-2 px-4 rounded mb-36 w-full'>Start Test</button>
+                <button onClick={handleClickStartQuiz} disabled={!checked} className='bg-blue-500 disabled:bg-slate-600 hover:bg-blue-700 text-lg text-white font-bold py-2 px-4 rounded mb-36 w-full'>Start Test</button>
 
             </div>
 
