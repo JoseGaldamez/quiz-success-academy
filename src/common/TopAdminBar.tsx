@@ -18,11 +18,11 @@ export const TopAdminBar = () => {
         <div className={styles['menu-blue']} >
             <section className={styles.menu}>
                 <span>
-                    <Link className='flex items-center' href={'/'}>
+                    <div className='flex items-center'>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img className={styles.LogoPrincipal} src="https://successacademyhn.com/wp-content/uploads/2023/02/logo_succress-blanco-copia.png" alt="logo" />
                         <span className={styles.LogoPrincipalDot}>Admin</span>
-                    </Link>
+                    </div>
                 </span>
                 <button onClick={logout} className={styles.closeButton}>
                     Cerrar sesión

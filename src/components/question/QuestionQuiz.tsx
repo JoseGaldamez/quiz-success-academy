@@ -1,25 +1,24 @@
-import { QuestionQuizModel } from '@/models/question.model';
+import { QuestionUniqueSelect } from '@/models/question.model';
 import { questionTypes } from '@/types/questions.types';
 import React, { useEffect, useState } from 'react'
 import { UniqueSelectionQuestion } from './UniqueSelectionQuestion';
+import { DetailsInfoQuestion } from './DetailsInfoQuestion';
 
 interface IQuestionQuizProps {
-    questions: QuestionQuizModel[];
+    questions: any[];
+    studentCode: string;
 }
 
-export const QuestionsQuiz = ({ questions }: IQuestionQuizProps) => {
+export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) => {
 
     const [questionSelected, setQuestionSelected] = useState<number>(0);
-
-    useEffect(() => {
-        console.log(questions[questionSelected]);
-
-    }, []);
 
     const questionTypeString = (type: string) => {
         switch (type) {
             case questionTypes.UNIQUE_SELECTION:
                 return 'Unique selection';
+            case questionTypes.DETAILS:
+                return 'Details Reading';
             case questionTypes.MULTIPLE_SELECTION:
                 return 'Multiple selection';
             case questionTypes.READING_MULTIPLE:
@@ -36,7 +35,7 @@ export const QuestionsQuiz = ({ questions }: IQuestionQuizProps) => {
     }
 
     return (
-        <div>
+        <div className='p-5'>
 
             {/* Question type */}
             <div className='border-orange-500 border-b-4 mb-5'>
@@ -45,7 +44,13 @@ export const QuestionsQuiz = ({ questions }: IQuestionQuizProps) => {
 
             {
                 questions[questionSelected].type === questionTypes.UNIQUE_SELECTION && (
-                    <UniqueSelectionQuestion question={questions[questionSelected]} />
+                    <UniqueSelectionQuestion question={questions[questionSelected]} studentCode={studentCode} />
+                )
+            }
+
+            {
+                questions[questionSelected].type === questionTypes.DETAILS && (
+                    <DetailsInfoQuestion question={questions[questionSelected]} />
                 )
             }
 

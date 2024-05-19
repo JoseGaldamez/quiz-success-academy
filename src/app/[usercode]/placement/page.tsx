@@ -11,16 +11,18 @@ const PlacementTest = () => {
 
     const dispatch = useAppDispatch();
 
-    const testCurrentUser = useAppSelector((state) => state.testCurrentUser);
+    const currentStudent = useAppSelector((state) => state.currentStudent);
     const [checked, setChecked] = useState<Boolean>();
     const [questionsList, setQuestionsList] = useState<any>();
 
     const router = useRouter();
 
     useEffect(() => {
-        if (testCurrentUser.userCode === '') router.push('/');
-
-        getQuestions();
+        if (currentStudent.code === "") {
+            router.push('/');
+        } else {
+            getQuestions();
+        }
     }, []);
 
     const getQuestions = async () => {
@@ -36,7 +38,7 @@ const PlacementTest = () => {
         dispatch(SET_LIST_QUESTIONS_STATE({ list: questionsList }));
 
         // Redirect to the quiz page
-        router.push(`/${testCurrentUser.userCode}/quiz`);
+        router.push(`/${currentStudent.code}/quiz`);
     }
 
     return (
@@ -45,7 +47,7 @@ const PlacementTest = () => {
             <div className='max-w-3xl mx-auto py-10'>
 
                 <h1 className='text-3xl font-bold my-2'>SUCCESS ACADEMY ENGLISH PLACEMENT TEST</h1>
-                <h2 className='py-5'>Hi <strong>{testCurrentUser.userName}</strong>, thank you for choosing Success Academy to be part of your learning process, we’re thrilled to have you!</h2>
+                <h2 className='py-5'>Hi <strong>{currentStudent.name}</strong>, thank you for choosing Success Academy to be part of your learning process, we’re thrilled to have you!</h2>
                 <hr />
 
                 <p className='text-red-700 font-bold'>

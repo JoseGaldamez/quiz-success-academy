@@ -1,12 +1,14 @@
 'use client';
-import { OptionsModel, QuestionQuizModel } from '@/models/question.model'
+import { OptionsModel, QuestionUniqueSelect } from '@/models/question.model'
+import { updateStudentAnswers } from '@/services/students.service';
 import React, { useEffect, useState } from 'react'
 
 interface IUniqueSelectionQuestionProps {
-    question: QuestionQuizModel
+    question: QuestionUniqueSelect,
+    studentCode: string
 }
 
-export const UniqueSelectionQuestion = ({ question }: IUniqueSelectionQuestionProps) => {
+export const UniqueSelectionQuestion = ({ question, studentCode }: IUniqueSelectionQuestionProps) => {
 
     const [correct, setCorrect] = useState(false);
     const [options, setOptions] = useState<OptionsModel[]>([]);
@@ -36,8 +38,9 @@ export const UniqueSelectionQuestion = ({ question }: IUniqueSelectionQuestionPr
         return optionsArray;
     }
 
-    const handleOptionChange = (selectedOptionCorrect: boolean, points: number) => {
-        setCorrect(selectedOptionCorrect);
+    const handleOptionChange = (option: OptionsModel) => {
+        setCorrect(option.correct);
+        updateStudentAnswers(studentCode, question.questionCode, option);
     }
 
     return (
@@ -56,7 +59,7 @@ export const UniqueSelectionQuestion = ({ question }: IUniqueSelectionQuestionPr
                     return (
                         <div key={index} className='text-lg my-3'>
                             <input onChange={() => {
-                                handleOptionChange(option.correct, option.points);
+                                handleOptionChange(option);
                             }} type="radio" id={option.value}
                                 name={question.title} value={option.value} />
                             <label className='pl-3' htmlFor={option.value}>

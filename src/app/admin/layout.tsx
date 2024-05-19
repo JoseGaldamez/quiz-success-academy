@@ -16,8 +16,6 @@ export default function AdminLayout({
     const router = useRouter();
 
     useEffect(() => {
-        console.log('HomeAdminPage useEffect');
-
         const isLogged = localStorage.getItem('authState');
         if (isLogged === 'false' && !authState) {
             navigateToLogin();

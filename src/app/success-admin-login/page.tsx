@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '@/lib/store';
-import { SET_AUTH_STATE } from '@/lib/slices/authSlice';
+import { SET_AUTH_STATE, SET_AUTH_USER } from '@/lib/slices/authSlice';
 import { FormularioLogin } from '@/components/login/FormularioLogin';
 import { useRouter } from 'next/navigation';
+import { loginAdmin } from '@/services/login.service';
 
 const SuccessAdminLoginPage = () => {
 
@@ -12,21 +13,29 @@ const SuccessAdminLoginPage = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
 
-    useEffect(() => {
-        const isLogged = localStorage.getItem('authState');
-        if (isLogged === 'true') {
+    // states
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+
+    const tryLogin = async (username: string, password: string) => {
+        setLoading(true);
+
+        const user = await loginAdmin(username, password);
+
+        if (user === null) {
+            setError(true);
+            setLoading(false);
+            return;
+        } else {
+            setError(false);
+            setLoading(false);
+
+            const { email, name } = user as any;
+
+            dispatch(SET_AUTH_USER({ email, name }));;
             dispatch(SET_AUTH_STATE(true));
             navigateToHome();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const tryLogin = (username: string, password: string) => {
-        console.log('tryLogin');
-        console.log({ username, password });
-        localStorage.setItem('authState', 'true');
-        dispatch(SET_AUTH_STATE(true));
-        navigateToHome();
     }
 
     const navigateToHome = () => {
@@ -35,9 +44,10 @@ const SuccessAdminLoginPage = () => {
 
 
     return (
-        <div >
+        <div>
             <div className='flex justify-center items-center w-full'>
-                {authState ? 'Bienvenido' : <FormularioLogin tryLogin={tryLogin} />}
+                {authState ? 'Bienvenido' :
+                    <FormularioLogin tryLogin={tryLogin} loading={loading} loginError={error} />}
             </div>
         </div>
     )

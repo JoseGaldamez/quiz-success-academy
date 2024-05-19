@@ -2,9 +2,10 @@
 
 import { MenuBar } from '@/common/MenuBar';
 import { TopBar } from '@/common/TopBar';
-import { SET_USER_STATE } from '@/lib/slices/testCurrentUser';
+import { SET_USER_STATE } from '@/lib/slices/currentStudent';
 import { useAppDispatch } from '@/lib/store';
-import { UserInformation } from '@/models/user.model';
+import { StudentInformation } from '@/models/student.model';
+import { getStudentByCode } from '@/services/students.service';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 
@@ -13,21 +14,34 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
 
     const dispatch = useAppDispatch();
 
-    const [user, setUser] = useState<UserInformation | undefined | null>(undefined);
+    const [user, setUser] = useState<StudentInformation | undefined | null>(undefined);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         setLoading(true);
-        const userLocal = JSON.parse(localStorage.getItem(params.usercode) || '{}');
-        if (userLocal.name) {
-            setUser(userLocal);
-            setLoading(false);
-            dispatch(SET_USER_STATE({ userName: userLocal.name, userCode: params.usercode }));
-        } else {
+        getStudentInformation(params.usercode);
+    }, []);
+
+    const getStudentInformation = async (userCode: string) => {
+
+        const student: StudentInformation = await getStudentByCode(userCode);
+
+        if (student === null) {
             setLoading(false);
             setUser(null);
+            return;
         }
-    }, []);
+
+        if (student === undefined) {
+            setLoading(false);
+            setUser(null);
+            return;
+        }
+        setUser(student);
+        setLoading(false);
+        dispatch(SET_USER_STATE(student));
+
+    }
 
 
     return (

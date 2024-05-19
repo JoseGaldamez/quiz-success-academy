@@ -1,8 +1,12 @@
 'use client';
 
+import { StudentInformation } from '@/models/student.model';
+import { addNewStudent } from '@/services/students.service';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import ShortUniqueId from 'short-unique-id';
+import { UserCreated } from './UserCreated';
+import { StudentStates } from '@/types/studentStates.types';
 
 
 const CreateUserPage = () => {
@@ -11,7 +15,7 @@ const CreateUserPage = () => {
     const [userCode, setUserCode] = useState<string | null>(null);
 
 
-    const createUserFromForm = (e: React.FormEvent<HTMLFormElement>) => {
+    const createUserFromForm = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const target = e.target as typeof e.target & {
             name: { value: string };
@@ -22,30 +26,29 @@ const CreateUserPage = () => {
             city: { value: string };
         };
 
-        const user = {
+
+        const userUUID = uid.rnd();
+        const user: StudentInformation = {
             name: target.name.value,
             dni: target.dni.value,
             email: target.email.value,
-            age: target.age.value,
+            age: Number(target.age.value),
             phone: target.phone.value,
             city: target.city.value,
+            state: StudentStates.PENDING,
+            code: userUUID
         }
 
-        console.log(user);
-        const userUUID = uid.rnd();
-
-        console.log(userUUID);
-
-        localStorage.setItem(userUUID, JSON.stringify(user));
-
-        setUserCode(userUUID);
+        const createdUser = await addNewStudent(userUUID, user);
+        if (createdUser === null) {
+            return alert('Error al crear el usuario, comuniquese con soporte tecnico');
+        } else {
+            setUserCode(userUUID);
+        }
 
     }
 
-
     if (userCode === null) {
-
-
         return (
             <div className='max-w-5xl mt-10 mx-auto'>
                 <h1 className='text-2xl font-bold text-blue-950'>Crear nuevo usuario</h1>
@@ -94,12 +97,7 @@ const CreateUserPage = () => {
     } else {
         return (
             <div className='max-w-5xl mt-10 mx-auto'>
-                <h1 className='text-2xl font-bold text-blue-950'>Usuario creado</h1>
-                <hr />
-                <div className='mt-5'>
-                    <p>El usuario ha sido creado exitosamente. El código del usuario es: <Link href={`/${userCode}`} className='font-bold text-orange-500 underline'>{userCode}</Link></p>
-                    <Link href='/admin/home' className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white'>Volver</Link>
-                </div>
+                <UserCreated userCode={userCode} />
             </div>
         )
     }
