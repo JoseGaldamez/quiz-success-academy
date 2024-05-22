@@ -8,3 +8,10 @@
   --primary-blue: #152d3a;
   --secondary-blue: #1aa1c1;
 }
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  height: 200px !important;
+  max-height: 250px !important;
+}

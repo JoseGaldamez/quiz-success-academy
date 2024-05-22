@@ -5,10 +5,11 @@ import React, { useEffect, useState } from 'react'
 
 interface IUniqueSelectionQuestionProps {
     question: QuestionUniqueSelect,
-    studentCode: string
+    studentCode: string,
+    setButtonDisable: (v: boolean) => void
 }
 
-export const UniqueSelectionQuestion = ({ question, studentCode }: IUniqueSelectionQuestionProps) => {
+export const UniqueSelectionQuestion = ({ question, studentCode, setButtonDisable }: IUniqueSelectionQuestionProps) => {
 
     const [correct, setCorrect] = useState(false);
     const [options, setOptions] = useState<OptionsModel[]>([]);
@@ -19,6 +20,7 @@ export const UniqueSelectionQuestion = ({ question, studentCode }: IUniqueSelect
         setTimeout(() => {
             setOptions(optionsList(question.options));
         }, 1);
+        setButtonDisable(true);
 
     }, [question]);
 
@@ -38,9 +40,10 @@ export const UniqueSelectionQuestion = ({ question, studentCode }: IUniqueSelect
         return optionsArray;
     }
 
-    const handleOptionChange = (option: OptionsModel) => {
+    const handleOptionChange = async (option: OptionsModel) => {
         setCorrect(option.correct);
-        updateStudentAnswers(studentCode, question.questionCode, option);
+        await updateStudentAnswers(studentCode, question.questionCode, option);
+        setButtonDisable(false);
     }
 
     return (
