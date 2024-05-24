@@ -1,4 +1,5 @@
 'use client';
+import React, { useEffect, useState } from 'react'
 
 import { MenuBar } from '@/common/MenuBar';
 import { TopBar } from '@/common/TopBar';
@@ -7,7 +8,6 @@ import { useAppDispatch } from '@/lib/store';
 import { StudentInformation } from '@/models/student.model';
 import { getStudentByCode } from '@/services/students.service';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
 
 
 const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
@@ -20,6 +20,7 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
     useEffect(() => {
         setLoading(true);
         getStudentInformation(params.usercode);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getStudentInformation = async (userCode: string) => {

@@ -24,12 +24,11 @@ export const WrittingQuestion = ({ question, setButtonDisable, studentCode }: IW
             setAnswerSaved(false);
             setButtonDisable(true);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [question]);
 
 
     const handleSaveAnswer = async () => {
-        console.log('Save answer');
-        // Save answer
 
         await updateStudentAnswers(studentCode, question.questionCode, {
             answer: answer,
@@ -97,9 +96,9 @@ export const WrittingQuestion = ({ question, setButtonDisable, studentCode }: IW
             }
 
 
-            <div>
+            {/* <div>
                 <h3 className='text-xl font-bold mb-5'>Your result: {successLevel.toFixed(2)}%</h3>
-            </div>
+            </div> */}
         </div>
     )
 }

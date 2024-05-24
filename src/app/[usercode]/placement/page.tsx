@@ -14,6 +14,7 @@ const PlacementTest = () => {
     const currentStudent = useAppSelector((state) => state.currentStudent);
     const [checked, setChecked] = useState<Boolean>();
     const [questionsList, setQuestionsList] = useState<any>();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const router = useRouter();
 
@@ -22,21 +23,25 @@ const PlacementTest = () => {
             router.push('/');
         } else {
             getQuestions();
+            setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getQuestions = async () => {
         const questions = await getAllQuestions();
-        console.log(questions);
         setQuestionsList(questions);
     }
 
     const handleClickStartQuiz = () => {
-        console.log('Start Quiz');
+        if (loading) return;
+
+        setLoading(true);
         if (!checked) return;
 
         dispatch(SET_LIST_QUESTIONS_STATE({ list: questionsList }));
 
+        setLoading(false);
         // Redirect to the quiz page
         router.push(`/${currentStudent.code}/quiz`);
     }
@@ -129,7 +134,9 @@ const PlacementTest = () => {
                     <label className='ml-2 text-xl' htmlFor="acceptPlacementCheck">I agree and accept the conditions.</label>
                 </p>
 
-                <button onClick={handleClickStartQuiz} disabled={!checked} className='bg-blue-500 disabled:bg-slate-600 hover:bg-blue-700 text-lg text-white font-bold py-2 px-4 rounded mb-36 w-full'>Start Test</button>
+                <button onClick={handleClickStartQuiz} disabled={!checked} className='bg-blue-500 disabled:bg-slate-600 hover:bg-blue-700 text-lg text-white font-bold py-2 px-4 rounded mb-36 w-full'>
+                    {loading ? 'Loading...' : 'Start Test'}
+                </button>
 
             </div>
 

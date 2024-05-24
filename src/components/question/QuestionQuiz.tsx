@@ -6,6 +6,7 @@ import { DetailsInfoQuestion } from './DetailsInfoQuestion';
 import { RecordQuestion } from './RecordQuestion';
 import { WrittingQuestion } from './WrittingQuestion';
 import { FreeWrittingQuestion } from './FreeWrittingQuestion';
+import { useRouter } from 'next/navigation';
 
 interface IQuestionQuizProps {
     questions: any[];
@@ -14,7 +15,9 @@ interface IQuestionQuizProps {
 
 export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) => {
 
-    const [questionSelected, setQuestionSelected] = useState<number>(0);
+    const router = useRouter();
+
+    const [questionSelected, setQuestionSelected] = useState<number>(32);
     const [buttonDisable, setButtonDisable] = useState(true);
 
     const questionTypeString = (type: string) => {
@@ -81,30 +84,34 @@ export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) =>
 
             {
                 questions[questionSelected].type === questionTypes.FREE_WRITE && (
-                    <FreeWrittingQuestion question={questions[questionSelected]} />
+                    <FreeWrittingQuestion question={questions[questionSelected]} studentCode={studentCode}
+                        setButtonDisable={(v: boolean) => setButtonDisable(v)} />
                 )
             }
 
 
             {/* Botones anterior y siguiente */}
             <div>
-                <div className='flex justify-between'>
-                    <button onClick={() => {
-                        if (questionSelected > 0) {
-                            setQuestionSelected(questionSelected - 1);
-                        }
-                    }}
-                        className='bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded'>Anterior</button>
+                <div className='flex justify-end'>
 
-                    <button onClick={() => {
-                        if (questionSelected < questions.length - 1) {
-                            setQuestionSelected(questionSelected + 1);
-                        }
-                    }} disabled={buttonDisable} className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-400 '>
-                        {
-                            questionSelected === questions.length - 1 ? 'Finalizar' : 'Siguiente'
-                        }
-                    </button>
+                    {
+                        (questionSelected === questions.length - 1) ? (
+                            <button onClick={() => {
+                                router.push(`calendar`)
+                            }} disabled={buttonDisable} className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-400 '>
+                                Finalizar
+                            </button>
+                        ) : (
+                            <button onClick={() => {
+                                if (questionSelected < questions.length - 1) {
+                                    setQuestionSelected(questionSelected + 1);
+                                }
+                            }} disabled={buttonDisable} className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-400 '>
+                                Siguiente
+                            </button>
+                        )
+                    }
+
                 </div>
             </div>
         </div>

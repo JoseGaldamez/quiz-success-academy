@@ -13,7 +13,6 @@ export const loginAdmin = async (email: string, password: string) => {
         const data = await response.json();
 
         if (data === null) {
-            console.log({ data, response });
             return null;
         }
 

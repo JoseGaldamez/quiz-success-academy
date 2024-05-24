@@ -2,6 +2,7 @@ export interface ResponseAudioData {
     status: string;
     success: boolean;
     result: Result;
+    urlAudio?: string;
 }
 
 export interface Result {

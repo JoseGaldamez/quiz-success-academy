@@ -1,4 +1,10 @@
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { StudentInformation } from "@/models/student.model";
+import { firebaseConfig } from "./firebaseConfig";
+
+// Initialize Firebase
+let app: any = null;
 
 export const getStudents = async () => {
     try {
@@ -66,4 +72,41 @@ export const updateStudentAnswers = async (
     } catch (error) {
         return null;
     }
+};
+
+export const updateAudioFile = async (
+    audioQuestionID: string,
+    studentCode: string,
+    file: Blob
+) => {
+    try {
+        const storage = await initAppFirestore();
+        const storageRef = ref(
+            storage,
+            `audios/${studentCode}/${audioQuestionID}.wav`
+        );
+
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+
+        return {
+            success: true,
+            url: url,
+            error: null,
+        };
+    } catch (error) {
+        return {
+            success: false,
+            url: null,
+            error,
+        };
+    }
+};
+
+const initAppFirestore = async () => {
+    if (app === null) {
+        app = initializeApp(firebaseConfig);
+    }
+
+    return getStorage(app);
 };
