@@ -17,7 +17,7 @@ export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) =>
 
     const router = useRouter();
 
-    const [questionSelected, setQuestionSelected] = useState<number>(32);
+    const [questionSelected, setQuestionSelected] = useState<number>(0);
     const [buttonDisable, setButtonDisable] = useState(true);
 
     const questionTypeString = (type: string) => {

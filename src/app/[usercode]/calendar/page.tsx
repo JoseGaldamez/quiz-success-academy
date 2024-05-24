@@ -1,11 +1,37 @@
 'use client';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { MenuBar } from '@/common/MenuBar';
+import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/lib/store';
+import { getListOfDates } from './helperCalendar';
+import { DayModel } from '@/models/day.model';
+import { ItemDay } from '@/components/calendar/ItemDay';
 
 const ChooseCalendarCall = () => {
+    const router = useRouter();
 
-    const [value, onChange] = useState(new Date());
+    const dispatch = useAppDispatch();
+    const currentStudent = useAppSelector((state) => state.currentStudent);
+
+    const [currentDate, setCurrentDate] = useState(new Date());
+    const [listOfDays, setListOfDays] = useState<DayModel[]>([]);
+    const [selectedDay, setSelectedDay] = useState<DayModel | null>(null);
+    const [selectedHour, setSelectedHour] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (currentStudent.code === '') {
+            router.push('/');
+        }
+
+        const listDays = getListOfDates(currentDate);
+
+        console.log({ currentDate, listDays });
+
+        setListOfDays(listDays);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div>
@@ -21,6 +47,53 @@ const ChooseCalendarCall = () => {
                 <h2 className='py-5'>Please select a date and time for your call with one of our representatives.</h2>
                 <hr />
 
+                <h3 className='text-xl font-bold mt-10'>Select a date</h3>
+                <div className='flex gap-2 justify-between items-center'>
+                    {
+                        listOfDays.map((day) => {
+                            return (
+                                <ItemDay key={day.fullDate}
+                                    day={day}
+                                    isSelected={selectedDay?.fullDate === day.fullDate}
+                                    selectDate={(day: DayModel) => {
+                                        setSelectedDay(day);
+                                        setSelectedHour(null);
+                                    }}
+                                />
+                            )
+                        })
+                    }
+                </div>
+
+                <h3 className='text-xl font-bold mt-16'>Select an hour</h3>
+                <div className='flex gap-2 justify-between items-center mt-10'>
+                    {
+                        (selectedDay !== null) && selectedDay?.hours.map((hour) => {
+                            return (
+                                <div onClick={() => {
+                                    setSelectedHour(hour);
+                                }} key={`${selectedDay.fullDate}-${hour}`}>
+                                    <span className={`${selectedHour === hour ? "bg-orange-600 text-white" : "bg-orange-100 text-orange-900"}  text-center p-5 mt-5 border border-slate-300 rounded-md cursor-pointer`}>
+                                        {hour}
+                                    </span>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                <br />
+
+
+                <div className='w-full border-b-2 border-slate-400 h-2 mt-10'></div>
+                <div className='flex gap-2 justify-between items-center mt-10'>
+                    {
+                        (selectedHour !== null && selectedDay !== null) && (
+                            <button onClick={() => {
+                                alert(`You have selected ${selectedDay.fullDate} at ${selectedHour}`);
+                            }} className='bg-blue-950 text-white w-full p-3 rounded-md'>Select Date and Hour</button>
+                        )
+                    }
+                </div>
             </div>
         </div>
     )
