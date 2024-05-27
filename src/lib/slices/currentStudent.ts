@@ -15,6 +15,7 @@ const initialState: StudentInformation = {
     state: StudentStates.PENDING,
     code: "",
     currentQuestion: 0,
+    dateToCall: null,
 };
 
 export const testCurrentUser = createSlice({
@@ -31,6 +32,7 @@ export const testCurrentUser = createSlice({
             state.state = action.payload.state;
             state.code = action.payload.code;
             state.currentQuestion = action.payload.currentQuestion;
+            state.dateToCall = action.payload.dateToCall;
         },
     },
 });

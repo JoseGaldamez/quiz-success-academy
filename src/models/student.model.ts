@@ -10,4 +10,5 @@ export interface StudentInformation {
     state: StudentStates;
     code: string;
     currentQuestion: number;
+    dateToCall?: any;
 }

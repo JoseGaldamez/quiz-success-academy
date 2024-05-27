@@ -104,6 +104,25 @@ export const updateStudentState = async (id: string, state: string) => {
     }
 };
 
+export const setDateToCall = async (id: string, date: any) => {
+    console.log({ id, date });
+    try {
+        const response = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/dateToCall.json`,
+            {
+                method: "PUT",
+                body: JSON.stringify(date),
+            }
+        );
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        return null;
+    }
+};
+
 export const updateAudioFile = async (
     audioQuestionID: string,
     studentCode: string,

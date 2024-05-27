@@ -8,6 +8,7 @@ import { useAppDispatch } from '@/lib/store';
 import { StudentInformation } from '@/models/student.model';
 import { getStudentByCode } from '@/services/students.service';
 import Link from 'next/link';
+import { StudentStates } from '@/types/studentStates.types';
 
 
 const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
@@ -41,14 +42,12 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
         setUser(student);
         setLoading(false);
         dispatch(SET_USER_STATE(student));
-
     }
 
 
     return (
         <div>
-            <TopBar />
-            <MenuBar />
+            <MenuBar showRequestAccessButton={false} />
             <div className='max-w-4xl mx-auto my-20 text-center'>
 
                 {!loading ? <div>
@@ -56,13 +55,26 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
                     {
                         (user != null) ? <div>
                             <h2 className='text-2xl my-5'>Bienvenido <strong>{user?.name}</strong></h2>
-                            <div className='my-16'>
-                                <Link href={`./${params.usercode}/placement`}
-                                    className='bg-orange-500 
+                            {
+                                (user.state === StudentStates.PENDING || user.state === StudentStates.IN_PROGRESS) &&
+                                <div className='my-16'>
+                                    <Link href={`./${params.usercode}/placement`}
+                                        className='bg-orange-500 
                                 rounded-lg text-white text-xl font-bold py-5 px-10'>
-                                    Comenzar prueba
-                                </Link>
-                            </div>
+                                        Comenzar prueba
+                                    </Link>
+                                </div>
+                            }
+
+                            {
+                                (user.state === StudentStates.TO_CALL) &&
+                                <div className='px-16 py-5 text-lg'>
+                                    <p>
+                                        You have finish your online test. We will contact you on the date and hour you have chosen to continue the process with the speaking part of this test. <strong>Please be ready and on time for the call.</strong>
+                                    </p>
+                                </div>
+                            }
+
 
                         </div> : <p>Usuario no encontrado.</p>
                     }

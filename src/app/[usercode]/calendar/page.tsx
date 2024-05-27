@@ -7,6 +7,8 @@ import { useAppDispatch, useAppSelector } from '@/lib/store';
 import { getListOfDates } from './helperCalendar';
 import { DayModel } from '@/models/day.model';
 import { ItemDay } from '@/components/calendar/ItemDay';
+import { setDateToCall } from '@/services/students.service';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 const ChooseCalendarCall = () => {
     const router = useRouter();
@@ -19,19 +21,27 @@ const ChooseCalendarCall = () => {
     const [selectedDay, setSelectedDay] = useState<DayModel | null>(null);
     const [selectedHour, setSelectedHour] = useState<string | null>(null);
 
+    const [loading, setLoading] = useState<boolean>(false);
+
     useEffect(() => {
         if (currentStudent.code === '') {
             router.push('/');
         }
-
         const listDays = getListOfDates(currentDate);
-
-        console.log({ currentDate, listDays });
-
         setListOfDays(listDays);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const handleSetDateToCall = async () => {
+        setLoading(true);
+        const dateToCall = {
+            date: selectedDay?.fullDate,
+            hour: selectedHour
+        };
+        await setDateToCall(currentStudent.code, dateToCall);
+        setLoading(false);
+        router.push(`finish`);
+    }
 
     return (
         <div>
@@ -88,9 +98,21 @@ const ChooseCalendarCall = () => {
                 <div className='flex gap-2 justify-between items-center mt-10'>
                     {
                         (selectedHour !== null && selectedDay !== null) && (
-                            <button onClick={() => {
-                                alert(`You have selected ${selectedDay.fullDate} at ${selectedHour}`);
-                            }} className='bg-blue-950 text-white w-full p-3 rounded-md'>Select Date and Hour</button>
+                            <button onClick={handleSetDateToCall} className='bg-blue-950 text-white w-full p-3 rounded-md'>
+
+                                {
+                                    loading ? (
+                                        <div className='flex justify-center items-center'>
+
+                                            <ArrowPathIcon width={20} height={20} className='animate-spin' />
+                                            <span className='ml-2'>Loading...</span>
+                                        </div>
+                                    ) : (
+                                        <span>Confirm date and time</span>
+                                    )
+                                }
+
+                            </button>
                         )
                     }
                 </div>

@@ -8,6 +8,8 @@ import { WrittingQuestion } from './WrittingQuestion';
 import { FreeWrittingQuestion } from './FreeWrittingQuestion';
 import { useRouter } from 'next/navigation';
 import { Recorder } from './Recorder';
+import { updateStudentState } from '@/services/students.service';
+import { StudentStates } from '@/types/studentStates.types';
 
 interface IQuestionQuizProps {
     questions: any[];
@@ -19,7 +21,7 @@ export const QuestionsQuiz = ({ questions, studentCode, currentQuestion = 0 }: I
 
     const router = useRouter();
 
-    const [questionSelected, setQuestionSelected] = useState<number>(currentQuestion);
+    const [questionSelected, setQuestionSelected] = useState<number>(currentQuestion < 52 ? currentQuestion : currentQuestion - 1);
     const [buttonDisable, setButtonDisable] = useState(true);
 
     const questionTypeString = (type: string) => {
@@ -39,6 +41,11 @@ export const QuestionsQuiz = ({ questions, studentCode, currentQuestion = 0 }: I
             default:
                 return 'Unknown';
         }
+    }
+
+    const handleFinish = async () => {
+        await updateStudentState(studentCode, StudentStates.TO_CALL);
+        router.push(`calendar`);
     }
 
     if (questions.length === 0) {
@@ -101,9 +108,7 @@ export const QuestionsQuiz = ({ questions, studentCode, currentQuestion = 0 }: I
 
                     {
                         (questionSelected === questions.length - 1) ? (
-                            <button onClick={() => {
-                                router.push(`calendar`)
-                            }} disabled={buttonDisable} className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-400 '>
+                            <button onClick={handleFinish} disabled={buttonDisable} className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded disabled:bg-slate-400 '>
                                 Finalizar
                             </button>
                         ) : (

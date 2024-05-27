@@ -2,7 +2,7 @@
 
 import { MenuBar } from '@/common/MenuBar'
 import { QuestionsQuiz } from '@/components/question/QuestionQuiz';
-import { useAppDispatch, useAppSelector } from '@/lib/store';
+import { useAppSelector } from '@/lib/store';
 import { QuestionUniqueSelect } from '@/models/question.model';
 import { updateStudentState } from '@/services/students.service';
 import { StudentStates } from '@/types/studentStates.types';
@@ -13,7 +13,6 @@ const Quiz = () => {
 
     const router = useRouter();
 
-    const dispatch = useAppDispatch();
     const currentStudent = useAppSelector((state) => state.currentStudent);
     const questionsList = useAppSelector((state) => state.questions.list);
 
