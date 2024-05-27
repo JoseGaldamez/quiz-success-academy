@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { MenuBar } from '@/common/MenuBar';
-import { TopBar } from '@/common/TopBar';
+
 import { SET_USER_STATE } from '@/lib/slices/currentStudent';
 import { useAppDispatch } from '@/lib/store';
 import { StudentInformation } from '@/models/student.model';
