@@ -49,7 +49,7 @@ const PlacementTest = () => {
     return (
         <div>
             <MenuBar showRequestAccessButton={false} />
-            <div className='max-w-3xl mx-auto py-10'>
+            <div className='max-w-3xl mx-auto p-10'>
 
                 <h1 className='text-3xl font-bold my-2'>SUCCESS ACADEMY ENGLISH PLACEMENT TEST</h1>
                 <h2 className='py-5'>Hi <strong>{currentStudent.name}</strong>, thank you for choosing Success Academy to be part of your learning process, we’re thrilled to have you!</h2>

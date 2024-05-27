@@ -1,16 +1,22 @@
+'use client';
+
 import { DetailsQuestion } from '@/models/question.model'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 interface IUniqueSelectionQuestionProps {
-    question: DetailsQuestion
+    question: DetailsQuestion,
+    setDisableButton: (value: boolean) => void
 }
 
-export const DetailsInfoQuestion = ({ question }: IUniqueSelectionQuestionProps) => {
-
+export const DetailsInfoQuestion = ({ question, setDisableButton }: IUniqueSelectionQuestionProps) => {
 
     const questionTitleString = (title: string) => {
         return title.replaceAll('\\n', '<br />');
     }
+
+    useEffect(() => {
+        setDisableButton(false);
+    }, [setDisableButton]);
 
     return (
         <div>

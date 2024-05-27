@@ -13,6 +13,8 @@ import { SingleWord } from './SingleWord';
 import { updateAudioFile, updateStudentAnswers } from '@/services/students.service';
 import { questionTypes } from '@/types/questions.types';
 import { RecordQuestionModel } from '@/models/question.model'
+import { GrInProgress } from 'react-icons/gr';
+import { ArrowPathIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 
 
 interface IRecordQuestionProps {
@@ -153,7 +155,11 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
 
 
                 <button disabled={!urlAudio || resultData !== undefined || validating} className='disabled:bg-slate-300 bg-blue-950 text-white rounded py-2 px-5 ' onClick={handleFileUpload}>
-                    Guardar respuesta
+                    {validating ? <span className='flex gap-2'>
+                        <ArrowPathIcon width={20} height={20} className='animate-spin' /> Saving
+                    </span> : <span className='flex gap-2'>
+                        <ArrowUpTrayIcon width={20} height={20} /> Save Answer
+                    </span>}
                 </button>
             </section>
 

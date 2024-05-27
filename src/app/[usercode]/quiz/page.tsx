@@ -4,6 +4,8 @@ import { MenuBar } from '@/common/MenuBar'
 import { QuestionsQuiz } from '@/components/question/QuestionQuiz';
 import { useAppDispatch, useAppSelector } from '@/lib/store';
 import { QuestionUniqueSelect } from '@/models/question.model';
+import { updateStudentState } from '@/services/students.service';
+import { StudentStates } from '@/types/studentStates.types';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -26,6 +28,8 @@ const Quiz = () => {
                 return questionsList[index] as QuestionUniqueSelect;
             });
             setQuestions(questionsArray);
+            updateStudentState(currentStudent.code, StudentStates.IN_PROGRESS);
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -36,7 +40,10 @@ const Quiz = () => {
             <MenuBar showRequestAccessButton={false} />
 
             <div className='max-w-3xl mx-auto py-10'>
-                <QuestionsQuiz questions={questions} studentCode={currentStudent.code} />
+                <QuestionsQuiz
+                    questions={questions}
+                    studentCode={currentStudent.code}
+                    currentQuestion={currentStudent.currentQuestion} />
             </div>
 
         </div>

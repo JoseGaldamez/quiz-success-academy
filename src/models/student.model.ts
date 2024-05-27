@@ -9,4 +9,5 @@ export interface StudentInformation {
     city: string;
     state: StudentStates;
     code: string;
+    currentQuestion: number;
 }

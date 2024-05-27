@@ -66,6 +66,36 @@ export const updateStudentAnswers = async (
             }
         );
 
+        const indexQuestion = parseInt(questionsCode.substring(1), 10);
+
+        console.log({ indexQuestion });
+
+        await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/currentQuestion.json`,
+            {
+                method: "PUT",
+                body: JSON.stringify(indexQuestion),
+            }
+        );
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const updateStudentState = async (id: string, state: string) => {
+    try {
+        const response = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/state.json`,
+            {
+                method: "PUT",
+                body: JSON.stringify(state),
+            }
+        );
+
         const data = await response.json();
 
         return data;

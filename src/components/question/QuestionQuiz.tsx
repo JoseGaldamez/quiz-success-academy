@@ -12,13 +12,14 @@ import { Recorder } from './Recorder';
 interface IQuestionQuizProps {
     questions: any[];
     studentCode: string;
+    currentQuestion: number;
 }
 
-export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) => {
+export const QuestionsQuiz = ({ questions, studentCode, currentQuestion = 0 }: IQuestionQuizProps) => {
 
     const router = useRouter();
 
-    const [questionSelected, setQuestionSelected] = useState<number>(32);
+    const [questionSelected, setQuestionSelected] = useState<number>(currentQuestion);
     const [buttonDisable, setButtonDisable] = useState(true);
 
     const questionTypeString = (type: string) => {
@@ -61,7 +62,8 @@ export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) =>
 
             {
                 questions[questionSelected].type === questionTypes.DETAILS && (
-                    <DetailsInfoQuestion question={questions[questionSelected]} />
+                    <DetailsInfoQuestion
+                        question={questions[questionSelected]} setDisableButton={(v: boolean) => setButtonDisable(v)} />
                 )
             }
 

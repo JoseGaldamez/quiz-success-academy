@@ -1,3 +1,4 @@
+import { updateAudioFile } from "@/services/students.service";
 import * as sdk from "microsoft-cognitiveservices-speech-sdk";
 
 const suscriptionKey = process.env.SUSCRIPTION_KEY || "";
@@ -6,6 +7,8 @@ const region = process.env.REGION || "eastus";
 export async function POST(request: Request) {
     const formData = await request.formData();
     const fileInput = formData.get("file") as File;
+    const questionCode = formData.get("questionCode") as string;
+    const studentCode = formData.get("studentCode") as string;
     const phase = formData.get("phase") as string;
 
     const fileBuffer = await fileInput.arrayBuffer();
@@ -59,16 +62,16 @@ export async function POST(request: Request) {
 
     reco.close();
 
-    // const responseSaved = await updateAudioFile(
-    //     questionCode,
-    //     studentCode,
-    //     fileInput
-    // );
+    const responseSaved = await updateAudioFile(
+        questionCode,
+        studentCode,
+        fileInput
+    );
 
     return Response.json({
         status: "Done",
         success: true,
-        urlAudio: "responseSaved.url",
+        urlAudio: responseSaved.url,
         result: result,
     });
 }
