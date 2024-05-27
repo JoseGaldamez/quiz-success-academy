@@ -36,7 +36,8 @@ const CreateUserPage = () => {
             phone: target.phone.value,
             city: target.city.value,
             state: StudentStates.PENDING,
-            code: userUUID
+            code: userUUID,
+            currentQuestion: 0,
         }
 
         const createdUser = await addNewStudent(userUUID, user);
