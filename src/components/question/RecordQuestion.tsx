@@ -1,16 +1,19 @@
 'use client';
 
-import { RecordQuestionModel } from '@/models/question.model'
+
 import React, { useEffect, useState } from 'react'
+import axios from 'axios';
 import { FaMicrophone } from 'react-icons/fa'
 import { IoStopCircleOutline } from 'react-icons/io5'
 
 import AudioReactRecorder, { RecordState } from 'audio-react-recorder';
-import axios from 'axios';
+
 import { PrivPronJSON, ResponseAudioData } from '@/models/ResponseAudioData.model';
 import { SingleWord } from './SingleWord';
 import { updateAudioFile, updateStudentAnswers } from '@/services/students.service';
 import { questionTypes } from '@/types/questions.types';
+import { RecordQuestionModel } from '@/models/question.model'
+
 
 interface IRecordQuestionProps {
     question: RecordQuestionModel,
@@ -25,11 +28,13 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
     const [validating, setValidating] = useState<boolean>(false);
     const [audioFile, setAudioFile] = useState<Blob | undefined>(undefined);
 
-    const [recordState, setRecordState] = useState<any>(RecordState.STOP);
     const [resultData, setResultData] = useState<PrivPronJSON | undefined>();
 
+    const [recordState, setRecordState] = useState<any>(RecordState.STOP);
+
+
     useEffect(() => {
-        setButtonDisable(true);
+        // setButtonDisable(true);
         return () => {
             seturlAudio(undefined);
             setRecording(false);
@@ -62,7 +67,7 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
         formData.append("phase", question.title);
 
         // make a POST request to the File Upload API with the FormData object and Rapid API headers
-        axios.post<ResponseAudioData>("/api/check-speech", formData, {
+        axios.post<ResponseAudioData>("/api/check-speech/", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Cross-Origin-Opener-Policy": "same-origin",
@@ -111,6 +116,9 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
 
     return (
         <div>
+            <div>
+                <AudioReactRecorder state={recordState} onStop={onStop} />
+            </div>
             <p>{question.subtitle}</p>
             <h3 className='mt-5 text-xl font-bold'>{question.title}</h3>
             <hr />
@@ -136,11 +144,8 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
             </section>
 
             <section className='p-5 text-center items-center justify-center'>
-
                 {
-                    (urlAudio && !recording) ? <audio className='w-full mb-10' src={urlAudio} controls /> : <div>
-                        <AudioReactRecorder className="w-full" state={recordState} onStop={onStop} />
-                    </div>
+                    (urlAudio && !recording) && <audio src={urlAudio} controls />
                 }
             </section>
 

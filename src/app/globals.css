@@ -12,6 +12,7 @@
 canvas {
   display: block;
   margin: 0 auto;
-  height: 200px !important;
+  width: 100% !important;
+  height: 100px !important;
   max-height: 250px !important;
 }

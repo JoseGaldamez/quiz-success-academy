@@ -7,6 +7,7 @@ import { RecordQuestion } from './RecordQuestion';
 import { WrittingQuestion } from './WrittingQuestion';
 import { FreeWrittingQuestion } from './FreeWrittingQuestion';
 import { useRouter } from 'next/navigation';
+import { Recorder } from './Recorder';
 
 interface IQuestionQuizProps {
     questions: any[];
@@ -17,7 +18,7 @@ export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) =>
 
     const router = useRouter();
 
-    const [questionSelected, setQuestionSelected] = useState<number>(0);
+    const [questionSelected, setQuestionSelected] = useState<number>(32);
     const [buttonDisable, setButtonDisable] = useState(true);
 
     const questionTypeString = (type: string) => {
@@ -69,6 +70,8 @@ export const QuestionsQuiz = ({ questions, studentCode }: IQuestionQuizProps) =>
                     <RecordQuestion
                         question={questions[questionSelected]} studentCode={studentCode}
                         setButtonDisable={(v: boolean) => setButtonDisable(v)} />
+                    // <Recorder question={questions[questionSelected]} studentCode={studentCode}
+                    //     setButtonDisable={(v: boolean) => setButtonDisable(v)} />
                 )
             }
 
