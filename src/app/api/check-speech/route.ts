@@ -62,16 +62,16 @@ export async function POST(request: Request) {
 
     reco.close();
 
-    const responseSaved = await updateAudioFile(
-        questionCode,
-        studentCode,
-        fileInput
-    );
+    // const responseSaved = await updateAudioFile(
+    //     questionCode,
+    //     studentCode,
+    //     fileInput
+    // );
 
     return Response.json({
         status: "Done",
         success: true,
-        urlAudio: responseSaved.url,
+        urlAudio: "responseSaved.url",
         result: result,
     });
 }
