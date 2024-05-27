@@ -62,7 +62,7 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
         formData.append("phase", question.title);
 
         // make a POST request to the File Upload API with the FormData object and Rapid API headers
-        axios.post<ResponseAudioData>("/api/checkSpeech/", formData, {
+        axios.post<ResponseAudioData>("/api/check-speech", formData, {
             headers: {
                 "Content-Type": "multipart/form-data",
                 "Cross-Origin-Opener-Policy": "same-origin",
@@ -124,7 +124,7 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
                             Stop recording</button>)
                         :
                         (<button
-                            disabled={urlAudio !== undefined || validating}
+                            disabled={resultData !== undefined}
                             className='bg-orange-600 max-w-60 mx-auto hover:bg-orange-700 disabled:bg-slate-200 transition-colors py-2 px-5 rounded-lg text-white text-center flex justify-center items-center gap-2'
                             onClick={start}>
                             <FaMicrophone width={30} />
