@@ -84,7 +84,9 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
                     await updateStudentAnswers(studentCode, question.questionCode, {
                         type: questionTypes.RECORD,
                         response: response.data.result.privPronJson,
-                        urlAudio: response.data.urlAudio
+                        urlAudio: response.data.urlAudio,
+                        points: 0,
+                        checked: false
                     });
 
                     setButtonDisable(false);

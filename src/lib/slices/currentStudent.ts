@@ -33,6 +33,7 @@ export const testCurrentUser = createSlice({
             state.code = action.payload.code;
             state.currentQuestion = action.payload.currentQuestion;
             state.dateToCall = action.payload.dateToCall;
+            state.answers = action.payload.answers;
         },
     },
 });
