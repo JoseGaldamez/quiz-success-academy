@@ -33,8 +33,7 @@ export const WrittingQuestion = ({ question, setButtonDisable, studentCode }: IW
         await updateStudentAnswers(studentCode, question.questionCode, {
             answer: answer,
             successLevel: successLevel.toFixed(2),
-            points: 0,
-            checked: false
+            points: 0
         });
 
         setButtonDisable(false);

@@ -27,8 +27,7 @@ export const FreeWrittingQuestion = ({ question, setButtonDisable, studentCode }
 
         await updateStudentAnswers(studentCode, question.questionCode, {
             answer: answer,
-            points: 0,
-            checked: false
+            points: 0
         });
 
         setButtonDisable(false);

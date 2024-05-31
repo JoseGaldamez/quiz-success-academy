@@ -35,8 +35,14 @@ export const testCurrentUser = createSlice({
             state.dateToCall = action.payload.dateToCall;
             state.answers = action.payload.answers;
         },
+        UPDATE_ANSWER: (
+            state,
+            action: PayloadAction<{ questionCode: string; answer: any }>
+        ) => {
+            state.answers[action.payload.questionCode] = action.payload.answer;
+        },
     },
 });
 
-export const { SET_USER_STATE } = testCurrentUser.actions;
+export const { SET_USER_STATE, UPDATE_ANSWER } = testCurrentUser.actions;
 export const currentStudentReducer = testCurrentUser.reducer;

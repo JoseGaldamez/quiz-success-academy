@@ -4,9 +4,16 @@ import { ApproveAndReject } from './ApproveAndReject';
 
 interface CheckAnswerInputQuestionProps {
     answer?: any;
+    updateCheckAnwer: (question: string, checked: boolean) => void;
+    questionCode: string;
 }
 
-export const CheckAnswerInputQuestion = ({ answer }: CheckAnswerInputQuestionProps) => {
+export const CheckAnswerInputQuestion = ({ answer, updateCheckAnwer, questionCode }: CheckAnswerInputQuestionProps) => {
+
+    const updateThisQuestion = (checked: boolean) => {
+        updateCheckAnwer(questionCode, checked);
+    }
+
     return (
         <div className='flex justify-between items-center'>
             <div className='p-5'>
@@ -19,14 +26,31 @@ export const CheckAnswerInputQuestion = ({ answer }: CheckAnswerInputQuestionPro
                     </h3>
                 </div>
 
-                <ApproveAndReject />
+                {
+                    (answer?.checked !== undefined) ? (
+                        <p className={answer.checked ? 'text-green-600 p-2 w-24 text-center rounded bg-green-100 mt-5' : 'text-red-600 p-2 w-24 text-center rounded bg-red-100 mt-5'}>
+                            Checked
+                        </p>
+                    ) : (
+                        <ApproveAndReject updateCheckAnwer={updateThisQuestion} />
+                    )
+                }
 
             </div>
             <div className='w-32 flex items-end'>
+
                 {
-                    <h3 className='text-lg font-bold w-full items-end text-right'>
-                        {(answer && answer.successLevel) ? (`${answer.successLevel} %`) : ''}
-                    </h3>
+                    (answer?.checked !== undefined) ? (
+                        <h3 className='text-lg font-bold w-full items-end text-right'>
+                            Points: {answer?.points}
+                        </h3>
+                    ) : (
+                        <h3 className='text-lg font-bold w-full items-end text-right'>
+                            {(answer && answer.successLevel) ? (`${answer.successLevel} %`) : ''}
+                        </h3>
+                    )
+                }
+                {
                 }
             </div>
         </div>
