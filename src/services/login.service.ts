@@ -3,7 +3,7 @@ export const loginAdmin = async (email: string, password: string) => {
         return null;
     }
 
-    const userbase = email.split("@")[0];
+    const userbase = email.split("@")[0].replaceAll(".", "-");
 
     try {
         const response = await fetch(
