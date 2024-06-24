@@ -14,7 +14,7 @@ const FinishPage = () => {
                 </div>
                 <div>
                     <p className='text-lg'>
-                        Thank you for your time and effort. We will contact on the date and hour you have chosen to continue the process with the speaking part of this test. <strong>Please be ready and on time for the call.</strong>
+                        Thank you for your time and effort. We will contact you on the date and hour you have chosen to continue the process with the speaking part of this test. <strong>Please be ready and on time for the call.</strong>
                     </p>
                 </div>
                 <div className='mt-14'>

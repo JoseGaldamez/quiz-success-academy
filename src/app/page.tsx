@@ -12,7 +12,7 @@ export default function Home() {
       <main>
         <PrimaryHome />
         <TestContent />
-        <Prices />
+        {/* <Prices /> */}
       </main>
     </>
   );

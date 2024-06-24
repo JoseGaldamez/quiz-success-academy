@@ -22,6 +22,7 @@ export const UniqueSelectionQuestion = ({ question, studentCode, setButtonDisabl
         }, 1);
         setButtonDisable(true);
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [question]);
 
     const questionTitleString = (title: string) => {
@@ -50,11 +51,6 @@ export const UniqueSelectionQuestion = ({ question, studentCode, setButtonDisabl
         <div className='mb-10 border-b-2 pb-10'>
             <div className='text-left'>
                 <span className='text-xl font-bold' dangerouslySetInnerHTML={{ __html: questionTitleString(question.title) }} ></span>
-                {
-                    correct && (
-                        <span className='text-green-500 text-lg font-bold'>OK</span>
-                    )
-                }
             </div>
 
             {

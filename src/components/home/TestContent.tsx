@@ -10,19 +10,19 @@ export const TestContent = () => {
             <div className={styles.testElements}>
                 <article>
                     <h4>Gramática</h4>
-                    <p>Prueba tu conocimiento de gramática con preguntas de selección múltiple.</p>
+                    <p>Comprueba que conocer la gramática al escribir bien en inglés.</p>
                 </article>
                 <article>
                     <h4>Escucha</h4>
-                    <p>Prueba tu conocimiento de gramática con preguntas de selección múltiple.</p>
+                    <p>Entiendes cuando escuchar una conversación en inglés.</p>
                 </article>
                 <article>
                     <h4>Pronunciación</h4>
-                    <p>Prueba tu conocimiento de gramática con preguntas de selección múltiple.</p>
+                    <p>Saber como pronunciar bien cada palabra y entonación al hablar.</p>
                 </article>
                 <article>
                     <h4>Ortografía</h4>
-                    <p>Prueba tu conocimiento de gramática con preguntas de selección múltiple.</p>
+                    <p>Recuerdas como escribir cada palabra que sabes en inglés.</p>
                 </article>
             </div>
 
