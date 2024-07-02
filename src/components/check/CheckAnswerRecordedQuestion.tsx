@@ -10,17 +10,18 @@ interface CheckAnswerRecordedQuestionProps {
 
 export const CheckAnswerRecordedQuestion = ({ answer, updateCheckAnwer, questionCode }: CheckAnswerRecordedQuestionProps) => {
 
-    const updateThisQuestion = (checked: boolean) => {
-        updateCheckAnwer(questionCode, checked);
+    const updateThisQuestion = (response: boolean) => {
+        updateCheckAnwer(questionCode, response);
     }
 
     return (
         <div className='flex justify-between items-center'>
+
             <div className='p-5'>
                 <div>
 
                     {
-                        answer && answer.response.Words.map((word: any, index: number) => (
+                        answer && answer.response?.Words.map((word: any, index: number) => (
                             <SingleWord key={index} {...word} />
                         ))
                     }
@@ -31,7 +32,7 @@ export const CheckAnswerRecordedQuestion = ({ answer, updateCheckAnwer, question
 
                 {
                     (answer?.checked !== undefined) ? (
-                        <p className={answer.checked ? 'text-green-600' : 'text-red-600'}>
+                        <p className={answer.checked ? 'text-green-600 p-2 w-24 text-center rounded bg-green-100 mt-5' : 'text-red-600 p-2 w-24 text-center rounded bg-red-100 mt-5'}>
                             Checked
                         </p>
                     ) : (
