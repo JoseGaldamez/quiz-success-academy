@@ -86,7 +86,6 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
                         response: response.data.result.privPronJson,
                         urlAudio: response.data.urlAudio,
                         points: 0,
-                        checked: false
                     });
 
                     setButtonDisable(false);
