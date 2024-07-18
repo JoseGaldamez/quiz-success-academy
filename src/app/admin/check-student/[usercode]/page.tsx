@@ -14,6 +14,7 @@ import { CheckAnswerUniqueQuestion } from '@/components/check/CheckAnswerUniqueQ
 import { CheckAnswerRecordedQuestion } from '@/components/check/CheckAnswerRecordedQuestion';
 import { CheckAnswerInputQuestion } from '@/components/check/CheckAnswerInputQuestion';
 import { set } from 'lodash';
+import { PointByCategory } from '@/components/check/PointsByCategory';
 
 const CheckStudent = ({ params }: { params: { usercode: string } }) => {
 
@@ -74,9 +75,7 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
         };
 
         dispatch(UPDATE_ANSWER({ questionCode: question, answer: newAnswer }));
-        const response = await updateStudentAnswers(user.code, question, newAnswer);
-        console.log({ response });
-
+        await updateStudentAnswers(user.code, question, newAnswer);
 
     }
 
@@ -101,7 +100,7 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
 
                         {
                             user.dateToCall && (
-                                <div className='flex justify-between mt-10 mb-20 bg-blue-50 p-10 rounded-lg'>
+                                <div className='flex justify-between mt-10 mb-10 bg-blue-50 p-10 rounded-lg'>
                                     <div className='flex items-center gap-2'>
                                         <p className='text-lg font-bold'>Date to call:</p>
                                         <p>{user.dateToCall.date}</p>
@@ -113,6 +112,8 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                                 </div>
                             )
                         }
+
+                        <PointByCategory user={user} />
 
                         <h3 className='mt-10 text-xl font-bold border-b-2 border-orange-500'>Answers</h3>
                         {
@@ -163,7 +164,10 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                             <p className='text-3xl font-bold m-10' >
                                 {countPoints()} points
                             </p>
-                            <p>
+
+                            <PointByCategory user={user} />
+
+                            <p className='mt-5'>
                                 Next Step:
                             </p>
 

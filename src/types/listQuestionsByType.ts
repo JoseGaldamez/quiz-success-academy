@@ -1,0 +1,55 @@
+export const listOfGrammarQuestions = [
+    "q001",
+    "q002",
+    "q003",
+    "q004",
+    "q005",
+    "q006",
+    "q007",
+    "q008",
+    "q009",
+    "q010",
+    "q011",
+    "q012",
+    "q013",
+    "q014",
+    "q015",
+    "q016",
+    "q017",
+    "q018",
+    "q019",
+    "q020",
+];
+
+export const listOfComprehensionQuestions = [
+    "q022",
+    "q023",
+    "q024",
+    "q025",
+    "q026",
+    "q027",
+    "q028",
+    "q029",
+    "q030",
+    "q031",
+];
+
+export const listOfSpeakingQuestions = ["q033", "q034", "q035", "q036", "q037"];
+
+export const listOfWrittingQuestions = [
+    "q038",
+    "q039",
+    "q040",
+    "q041",
+    "q042",
+    "q043",
+    "q044",
+    "q045",
+    "q046",
+    "q047",
+    "q048",
+    "q049",
+    "q050",
+    "q051",
+    "q052",
+];

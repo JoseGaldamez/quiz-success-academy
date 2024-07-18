@@ -36,9 +36,10 @@ export const CheckAnswerRecordedQuestion = ({ answer, updateCheckAnwer, question
                             Checked
                         </p>
                     ) : (
-                        <ApproveAndReject updateCheckAnwer={updateThisQuestion} />
+                        <p></p>
                     )
                 }
+                <ApproveAndReject updateCheckAnwer={updateThisQuestion} />
 
 
             </div>

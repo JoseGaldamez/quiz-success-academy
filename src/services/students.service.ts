@@ -68,8 +68,6 @@ export const updateStudentAnswers = async (
 
         const indexQuestion = parseInt(questionsCode.substring(1), 10);
 
-        console.log({ indexQuestion });
-
         await fetch(
             `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/currentQuestion.json`,
             {
@@ -105,7 +103,6 @@ export const updateStudentState = async (id: string, state: string) => {
 };
 
 export const setDateToCall = async (id: string, date: any) => {
-    console.log({ id, date });
     try {
         const response = await fetch(
             `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/dateToCall.json`,

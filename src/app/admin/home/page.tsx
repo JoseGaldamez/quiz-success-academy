@@ -6,12 +6,16 @@ import Link from 'next/link';
 
 import { IoIosRefresh } from "react-icons/io";
 import { StudentInformation } from '@/models/student.model';
+import { IoSearch } from 'react-icons/io5';
 
 
 const HomeAdminPage = () => {
 
     const [listOfStudents, setListOfStudents] = useState<StudentInformation[]>([]);
+    const [listOfStudentsBase, setListOfStudentsBase] = useState<StudentInformation[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchValue, setSearchValue] = useState("");
+
 
     useEffect(() => {
         // Fetch all students
@@ -32,10 +36,24 @@ const HomeAdminPage = () => {
             return response[key];
         });
 
-        setListOfStudents(responseArray);
+        const orderedArray = responseArray.sort((a, b) => {
+            const dateA = a.dateToCall ? a.dateToCall.date : "";
+            const dateB = b.dateToCall ? b.dateToCall.date : "";
+
+            return dateA.localeCompare(dateB)
+        });
+
+        setListOfStudents(orderedArray);
+        setListOfStudentsBase(orderedArray);
         setLoading(false);
 
     };
+
+    const searchStudent = (value: string) => {
+        const filtered = listOfStudentsBase.filter(item => item.name.toLowerCase().includes(value.toLowerCase()))
+
+        setListOfStudents(filtered)
+    }
 
     return (
         <div className='max-w-5xl mt-10 mx-auto p-10'>
@@ -50,6 +68,12 @@ const HomeAdminPage = () => {
             <div className='flex justify-between items-center mt-5'>
                 <h3 className='text-xl'>Lista de usuarios</h3>
                 <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
+            </div>
+
+            <div className='w-2/3 flex'>
+                <input type="text" onChange={(e) => {
+                    searchStudent(e.target.value)
+                }} className='mt-1 block w-2/3 px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' placeholder='Buscar usuario' />
             </div>
 
             {
@@ -67,6 +91,7 @@ const HomeAdminPage = () => {
                             <tr className='bg-slate-200 text-left'>
                                 <th className='p-3'>Nombre</th>
                                 <th className='p-3'>Correo</th>
+                                <th className='p-3'>Fecha</th>
                                 <th className='p-3'>Estado</th>
                                 <th className='p-3'>Acciones</th>
                             </tr>
@@ -77,6 +102,7 @@ const HomeAdminPage = () => {
                                     <tr key={student.code}>
                                         <td className='p-5'>{student.name}</td>
                                         <td className='p-5'>{student.email}</td>
+                                        <td className='p-5'>{student.dateToCall?.date}</td>
                                         <td className='p-5'>{student.state}</td>
                                         <td className='p-5'>
                                             <Link className='bg-orange-500 text-white px-2 py-1 rounded' href={`/admin/check-student/${student.code}`}>Revisar</Link>
