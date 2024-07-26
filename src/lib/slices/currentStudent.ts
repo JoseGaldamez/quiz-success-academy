@@ -34,6 +34,7 @@ export const testCurrentUser = createSlice({
             state.currentQuestion = action.payload.currentQuestion;
             state.dateToCall = action.payload.dateToCall;
             state.answers = action.payload.answers;
+            state.details = action.payload.details;
         },
         UPDATE_ANSWER: (
             state,

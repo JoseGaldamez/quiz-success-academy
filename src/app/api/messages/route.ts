@@ -20,6 +20,9 @@ export async function POST(request: Request, response: NextApiResponse) {
 
     try {
         const result = await sendMessage(bodyMessage.message);
+        console.log("====================================");
+        console.log(result);
+        console.log("====================================");
         Response.json(result);
     } catch (error) {
         return Response.json({ error: true, description: error });

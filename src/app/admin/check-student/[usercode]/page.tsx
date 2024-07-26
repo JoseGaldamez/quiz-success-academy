@@ -7,13 +7,10 @@ import { StudentInformation } from '@/models/student.model';
 import { getStudentByCode, updateStudentAnswers } from '@/services/students.service';
 import { HeaderCheckStudent } from '@/components/check/HeaderCheckStudent';
 import { getAllQuestions } from '@/services/question.service';
-import { list } from '@firebase/storage';
-import { listenerCount } from 'process';
 import { questionTypes } from '@/types/questions.types';
 import { CheckAnswerUniqueQuestion } from '@/components/check/CheckAnswerUniqueQuestion';
 import { CheckAnswerRecordedQuestion } from '@/components/check/CheckAnswerRecordedQuestion';
 import { CheckAnswerInputQuestion } from '@/components/check/CheckAnswerInputQuestion';
-import { set } from 'lodash';
 import { PointByCategory } from '@/components/check/PointsByCategory';
 
 const CheckStudent = ({ params }: { params: { usercode: string } }) => {
@@ -34,6 +31,7 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
     const getStudentAndQuestionsInformation = async (userCode: string) => {
 
         const student: StudentInformation = await getStudentByCode(userCode);
+
         await createListOfQuestions();
 
         if (student === null) {

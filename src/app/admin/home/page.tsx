@@ -7,12 +7,14 @@ import Link from 'next/link';
 import { IoIosRefresh } from "react-icons/io";
 import { StudentInformation } from '@/models/student.model';
 import { IoSearch } from 'react-icons/io5';
+import { useAppSelector } from '@/lib/store';
 
 
 const HomeAdminPage = () => {
 
     const [listOfStudents, setListOfStudents] = useState<StudentInformation[]>([]);
     const [listOfStudentsBase, setListOfStudentsBase] = useState<StudentInformation[]>([]);
+    const auth = useAppSelector((state) => state.auth);
     const [loading, setLoading] = useState(true);
     const [searchValue, setSearchValue] = useState("");
 
@@ -67,7 +69,11 @@ const HomeAdminPage = () => {
 
             <div className='flex justify-between items-center mt-5'>
                 <h3 className='text-xl'>Lista de usuarios</h3>
-                <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
+                {
+                    auth.email !== "guest@successacademyhn.com" && (
+                        <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
+                    )
+                }
             </div>
 
             <div className='w-2/3 flex'>

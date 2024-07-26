@@ -1,6 +1,7 @@
 import React from 'react'
 import { SingleWord } from '../question/SingleWord';
 import { ApproveAndReject } from './ApproveAndReject';
+import { useAppSelector } from '@/lib/store';
 
 interface CheckAnswerInputQuestionProps {
     answer?: any;
@@ -9,6 +10,8 @@ interface CheckAnswerInputQuestionProps {
 }
 
 export const CheckAnswerInputQuestion = ({ answer, updateCheckAnwer, questionCode }: CheckAnswerInputQuestionProps) => {
+
+    const auth = useAppSelector((state) => state.auth);
 
     const updateThisQuestion = (checked: boolean) => {
         updateCheckAnwer(questionCode, checked);
@@ -32,6 +35,12 @@ export const CheckAnswerInputQuestion = ({ answer, updateCheckAnwer, questionCod
                             Checked
                         </p>
                     ) : (
+                        <p></p>
+                    )
+                }
+
+                {
+                    auth.email !== "guest@successacademyhn.com" && (
                         <ApproveAndReject updateCheckAnwer={updateThisQuestion} />
                     )
                 }

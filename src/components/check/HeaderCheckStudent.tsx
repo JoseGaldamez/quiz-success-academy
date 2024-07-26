@@ -1,3 +1,4 @@
+import { useAppSelector } from '@/lib/store';
 import { StudentInformation } from '@/models/student.model'
 import { updateStudentDetails, updateStudentState } from '@/services/students.service'
 import React, { useState } from 'react'
@@ -6,6 +7,7 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
 
     const [localState, setLocalState] = useState(user.state);
     const [detailsText, setDetailsText] = useState(user.details || "");
+    const auth = useAppSelector((state) => state.auth);
     const [saved, setSaved] = useState(true);
 
     const setStudentState = async (newState: string) => {
@@ -52,7 +54,7 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
 
 
                     {
-                        localState === 'to_call' && (
+                        (localState === 'to_call' && auth.email !== 'guest@successacademyhn.com') && (
                             <button onClick={() => {
                                 setStudentState("called")
                             }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg'>
@@ -62,7 +64,7 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
                     }
 
                     {
-                        (localState === 'called' || localState === 'no_registered') && (
+                        ((localState === 'called' || localState === 'no_registered') && auth.email !== 'guest@successacademyhn.com') && (
                             <div>
                                 <button onClick={() => {
                                     setStudentState("registered")
@@ -95,15 +97,24 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
                 localState === 'no_registered' && (
                     <div>
                         <textarea value={detailsText} onChange={(inputInformation) => {
+                            if (auth.email === 'guest@successacademyhn.com') return;
+
                             setDetailsText(inputInformation.target.value)
                             setSaved(false)
                         }} placeholder='Details' cols={5} className='w-full h-56 border-slate-400 border rounded-md p-5' ></textarea>
 
-                        <button disabled={saved} onClick={() => {
-                            saveDetailsNoRegistered(detailsText)
-                        }} className='bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-200 p-2 rounded-lg'>
-                            Save
-                        </button>
+                        {
+
+                            auth.email !== 'guest@successacademyhn.com' && (
+                                <button disabled={saved} onClick={() => {
+                                    saveDetailsNoRegistered(detailsText)
+                                }} className='bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-200 p-2 rounded-lg'>
+                                    Save
+                                </button>
+                            )
+
+                        }
+
 
                     </div>
                 )
