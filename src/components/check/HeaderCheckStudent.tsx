@@ -1,10 +1,12 @@
 import { StudentInformation } from '@/models/student.model'
-import { updateStudentState } from '@/services/students.service'
+import { updateStudentDetails, updateStudentState } from '@/services/students.service'
 import React, { useState } from 'react'
 
 export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
 
     const [localState, setLocalState] = useState(user.state);
+    const [detailsText, setDetailsText] = useState(user.details || "");
+    const [saved, setSaved] = useState(true);
 
     const setStudentState = async (newState: string) => {
 
@@ -12,6 +14,14 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
         if (response) {
             setLocalState(response);
         }
+
+    }
+
+    const saveDetailsNoRegistered = async (details: string) => {
+
+        await updateStudentDetails(user.code, details);
+
+        setSaved(true);
 
     }
 
@@ -41,15 +51,63 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
                 <div>
 
 
+                    {
+                        localState === 'to_call' && (
+                            <button onClick={() => {
+                                setStudentState("called")
+                            }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg'>
+                                Change to Called
+                            </button>
+                        )
+                    }
+
+                    {
+                        (localState === 'called' || localState === 'no_registered') && (
+                            <div>
+                                <button onClick={() => {
+                                    setStudentState("registered")
+                                }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg mr-4'>
+                                    Registered
+                                </button>
+
+                                <button onClick={() => {
+                                    setStudentState("no_registered")
+                                }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg'>
+                                    No Registered
+                                </button>
+                            </div>
+                        )
+                    }
 
 
-                    <button onClick={() => {
-                        setStudentState("called")
-                    }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg'>
-                        Change to Called
-                    </button>
+                    {
+                        localState === 'registered' && (
+                            <div>
+                                <span>Registered</span>
+                            </div>
+                        )
+                    }
+
                 </div>
+
             </div>
+            {
+                localState === 'no_registered' && (
+                    <div>
+                        <textarea value={detailsText} onChange={(inputInformation) => {
+                            setDetailsText(inputInformation.target.value)
+                            setSaved(false)
+                        }} placeholder='Details' cols={5} className='w-full h-56 border-slate-400 border rounded-md p-5' ></textarea>
+
+                        <button disabled={saved} onClick={() => {
+                            saveDetailsNoRegistered(detailsText)
+                        }} className='bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-200 p-2 rounded-lg'>
+                            Save
+                        </button>
+
+                    </div>
+                )
+            }
 
 
         </header>

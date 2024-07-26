@@ -12,4 +12,5 @@ export interface StudentInformation {
     currentQuestion: number;
     dateToCall?: any;
     answers?: any;
+    details?: string;
 }
