@@ -1,30 +1,26 @@
-import { useAppSelector } from '@/lib/store';
+import React from 'react'
+
 import { StudentInformation } from '@/models/student.model'
-import { updateStudentDetails, updateStudentState } from '@/services/students.service'
-import React, { useState } from 'react'
+import { StudentStates } from '@/types/studentStates.types';
 
 export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
 
-    const [localState, setLocalState] = useState(user.state);
-    const [detailsText, setDetailsText] = useState(user.details || "");
-    const auth = useAppSelector((state) => state.auth);
-    const [saved, setSaved] = useState(true);
+    const visibleState = (state: StudentStates) => {
+        switch (state) {
+            case StudentStates.PENDING:
+                return "Evaluacion en curso";
+            case StudentStates.TO_CALL:
+                return "Esperando llamada evaluativa"
+            case StudentStates.CALLED:
+                return "Evaluado";
+            case StudentStates.REGISTERED:
+                return "Matriculado";
+            case StudentStates.NO_REGISTERED:
+                return "No matriculado"
 
-    const setStudentState = async (newState: string) => {
-
-        const response = await updateStudentState(user.code, newState);
-        if (response) {
-            setLocalState(response);
+            default:
+                return "En Proceso"
         }
-
-    }
-
-    const saveDetailsNoRegistered = async (details: string) => {
-
-        await updateStudentDetails(user.code, details);
-
-        setSaved(true);
-
     }
 
     return (
@@ -47,7 +43,7 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
             <div className='flex items-center justify-between'>
                 <h2 className='text-lg my-5 items-start'>
                     <strong>Estado: </strong>
-                    <span className='text-sm pl-2'> {localState} </span>
+                    <span className='text-sm pl-2'> {visibleState(user.state)} </span>
                 </h2>
             </div>
 
