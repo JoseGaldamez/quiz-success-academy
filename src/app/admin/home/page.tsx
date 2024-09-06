@@ -6,8 +6,26 @@ import Link from 'next/link';
 
 import { IoIosRefresh } from "react-icons/io";
 import { StudentInformation } from '@/models/student.model';
-import { IoSearch } from 'react-icons/io5';
 import { useAppSelector } from '@/lib/store';
+import { StudentStates } from '@/types/studentStates.types';
+
+export const visibleState = (state: StudentStates) => {
+    switch (state) {
+        case StudentStates.PENDING:
+            return "Evaluacion en curso";
+        case StudentStates.TO_CALL:
+            return "Esperando llamada evaluativa"
+        case StudentStates.CALLED:
+            return "Evaluado";
+        case StudentStates.REGISTERED:
+            return "Matriculado";
+        case StudentStates.NO_REGISTERED:
+            return "No matriculado"
+
+        default:
+            return "En Proceso"
+    }
+}
 
 
 const HomeAdminPage = () => {
@@ -16,8 +34,6 @@ const HomeAdminPage = () => {
     const [listOfStudentsBase, setListOfStudentsBase] = useState<StudentInformation[]>([]);
     const auth = useAppSelector((state) => state.auth);
     const [loading, setLoading] = useState(true);
-    const [searchValue, setSearchValue] = useState("");
-
 
     useEffect(() => {
         // Fetch all students
@@ -109,9 +125,15 @@ const HomeAdminPage = () => {
                                         <td className='p-5'>{student.name}</td>
                                         <td className='p-5'>{student.email}</td>
                                         <td className='p-5'>{student.dateToCall?.date}</td>
-                                        <td className='p-5'>{student.state}</td>
+                                        <td className='p-5'>{visibleState(student.state)}</td>
                                         <td className='p-5'>
-                                            <Link className='bg-orange-500 text-white px-2 py-1 rounded' href={`/admin/check-student/${student.code}`}>Revisar</Link>
+                                            {
+                                                student.state === StudentStates.PENDING ? (
+                                                    <span>No disponible</span>
+                                                ) : (
+                                                    <Link className='bg-orange-500 text-white px-2 py-1 rounded' href={`/admin/check-student/${student.code}`}>Revisar</Link>
+                                                )
+                                            }
                                         </td>
                                     </tr>
                                 ))
@@ -123,5 +145,8 @@ const HomeAdminPage = () => {
         </div>
     )
 }
+
+
+
 
 export default HomeAdminPage

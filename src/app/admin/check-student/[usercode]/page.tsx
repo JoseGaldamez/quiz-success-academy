@@ -12,6 +12,7 @@ import { CheckAnswerUniqueQuestion } from '@/components/check/CheckAnswerUniqueQ
 import { CheckAnswerRecordedQuestion } from '@/components/check/CheckAnswerRecordedQuestion';
 import { CheckAnswerInputQuestion } from '@/components/check/CheckAnswerInputQuestion';
 import { PointByCategory } from '@/components/check/PointsByCategory';
+import { ExamCallAndComment } from '@/components/check/ExamCallAndComment';
 
 const CheckStudent = ({ params }: { params: { usercode: string } }) => {
 
@@ -112,6 +113,9 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                         }
 
                         <PointByCategory user={user} />
+
+                        <ExamCallAndComment user={user} />
+
 
                         <h3 className='mt-10 text-xl font-bold border-b-2 border-orange-500'>Answers</h3>
                         {

@@ -11,7 +11,7 @@ export async function POST(request: Request, response: NextApiResponse) {
 
     const bodyMessage = await request.json();
 
-    if (!bodyMessage || !bodyMessage.message) {
+    if (!bodyMessage || !bodyMessage.message || !bodyMessage.email) {
         return Response.json({
             error: true,
             description: "Bad Request, some props are missing.",
@@ -19,11 +19,8 @@ export async function POST(request: Request, response: NextApiResponse) {
     }
 
     try {
-        const result = await sendMessage(bodyMessage.message);
-        console.log("====================================");
-        console.log(result);
-        console.log("====================================");
-        Response.json(result);
+        await sendMessage(bodyMessage.message, bodyMessage.email);
+        return Response.json({ error: false, description: "Message sent" });
     } catch (error) {
         return Response.json({ error: true, description: error });
     }

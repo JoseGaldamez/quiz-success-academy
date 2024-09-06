@@ -1,3 +1,4 @@
+import { visibleState } from '@/app/admin/home/page';
 import { useAppSelector } from '@/lib/store';
 import { StudentInformation } from '@/models/student.model'
 import { updateStudentDetails, updateStudentState } from '@/services/students.service'
@@ -47,79 +48,9 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
             <div className='flex items-center justify-between'>
                 <h2 className='text-lg my-5 items-start'>
                     <strong>Estado: </strong>
-                    <span className='text-sm pl-2'> {localState} </span>
+                    <span className='text-sm pl-2'> {visibleState(localState)} </span>
                 </h2>
-
-                <div>
-
-
-                    {
-                        (localState === 'to_call' && auth.email !== 'guest@successacademyhn.com') && (
-                            <button onClick={() => {
-                                setStudentState("called")
-                            }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg'>
-                                Change to Called
-                            </button>
-                        )
-                    }
-
-                    {
-                        ((localState === 'called' || localState === 'no_registered') && auth.email !== 'guest@successacademyhn.com') && (
-                            <div>
-                                <button onClick={() => {
-                                    setStudentState("registered")
-                                }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg mr-4'>
-                                    Registered
-                                </button>
-
-                                <button onClick={() => {
-                                    setStudentState("no_registered")
-                                }} className='bg-orange-500 text-white hover:bg-orange-600 p-2 rounded-lg'>
-                                    No Registered
-                                </button>
-                            </div>
-                        )
-                    }
-
-
-                    {
-                        localState === 'registered' && (
-                            <div>
-                                <span>Registered</span>
-                            </div>
-                        )
-                    }
-
-                </div>
-
             </div>
-            {
-                localState === 'no_registered' && (
-                    <div>
-                        <textarea value={detailsText} onChange={(inputInformation) => {
-                            if (auth.email === 'guest@successacademyhn.com') return;
-
-                            setDetailsText(inputInformation.target.value)
-                            setSaved(false)
-                        }} placeholder='Details' cols={5} className='w-full h-56 border-slate-400 border rounded-md p-5' ></textarea>
-
-                        {
-
-                            auth.email !== 'guest@successacademyhn.com' && (
-                                <button disabled={saved} onClick={() => {
-                                    saveDetailsNoRegistered(detailsText)
-                                }} className='bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-200 p-2 rounded-lg'>
-                                    Save
-                                </button>
-                            )
-
-                        }
-
-
-                    </div>
-                )
-            }
-
 
         </header>
     )

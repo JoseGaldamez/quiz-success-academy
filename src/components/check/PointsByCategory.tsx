@@ -1,29 +1,37 @@
 import { StudentInformation } from '@/models/student.model'
 import { listOfComprehensionQuestions, listOfGrammarQuestions, listOfSpeakingQuestions, listOfWrittingQuestions } from '@/types/listQuestionsByType'
-import React from 'react'
+import { StudentStates } from '@/types/studentStates.types'
+import React, { useState } from 'react'
 
 export const PointByCategory = ({ user }: { user: StudentInformation }) => {
+
     return (
         <div >
 
-            <h2 className='text-lg font-bold' >Point by Category</h2>
+            <h2 className='mt-10 text-xl font-bold border-b-2 border-orange-500' >Point by Category</h2>
             <hr />
 
             <div className='p-5'>
                 <p>
-                    <span className='font-bold'>Grammar:  </span>{getTotalPointOfGrammar(user.answers)}
+                    <span className='font-bold'>Grammar:  </span>{getTotalPointOfGrammar(user.answers)} / {listOfGrammarQuestions.length}
                 </p>
                 <p>
-                    <span className='font-bold'>Comprehension:  </span>{getTotalPointOfComprehension(user.answers)}
+                    <span className='font-bold'>Comprehension:  </span>{getTotalPointOfComprehension(user.answers)} / {listOfComprehensionQuestions.length}
                 </p>
                 <p>
-                    <span className='font-bold'>Speaking:  </span>{getTotalPointOfSpeaking(user.answers)}
+                    <span className='font-bold'>Speaking:  </span>{getTotalPointOfSpeaking(user.answers)} / {listOfSpeakingQuestions.length}
                 </p>
                 <p>
-                    <span className='font-bold'>Writting:  </span>{getTotalPointOfWritting(user.answers)}
+                    <span className='font-bold'>Writting:  </span>{getTotalPointOfWritting(user.answers)} / {listOfWrittingQuestions.length}
                 </p>
             </div>
             <hr />
+
+
+
+            <div>
+
+            </div>
 
         </div>
     )
