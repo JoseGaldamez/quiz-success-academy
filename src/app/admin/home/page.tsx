@@ -9,23 +9,23 @@ import { StudentInformation } from '@/models/student.model';
 import { useAppSelector } from '@/lib/store';
 import { StudentStates } from '@/types/studentStates.types';
 
-export const visibleState = (state: StudentStates) => {
-    switch (state) {
-        case StudentStates.PENDING:
-            return "Evaluacion en curso";
-        case StudentStates.TO_CALL:
-            return "Esperando llamada evaluativa"
-        case StudentStates.CALLED:
-            return "Evaluado";
-        case StudentStates.REGISTERED:
-            return "Matriculado";
-        case StudentStates.NO_REGISTERED:
-            return "No matriculado"
+// export const visibleState = (state: StudentStates) => {
+//     switch (state) {
+//         case StudentStates.PENDING:
+//             return "Evaluacion en curso";
+//         case StudentStates.TO_CALL:
+//             return "Esperando llamada evaluativa"
+//         case StudentStates.CALLED:
+//             return "Evaluado";
+//         case StudentStates.REGISTERED:
+//             return "Matriculado";
+//         case StudentStates.NO_REGISTERED:
+//             return "No matriculado"
 
-        default:
-            return "En Proceso"
-    }
-}
+//         default:
+//             return "En Proceso"
+//     }
+// }
 
 
 const HomeAdminPage = () => {
@@ -125,7 +125,7 @@ const HomeAdminPage = () => {
                                         <td className='p-5'>{student.name}</td>
                                         <td className='p-5'>{student.email}</td>
                                         <td className='p-5'>{student.dateToCall?.date}</td>
-                                        <td className='p-5'>{visibleState(student.state)}</td>
+                                        <td className='p-5'>{student.state}</td>
                                         <td className='p-5'>
                                             {
                                                 student.state === StudentStates.PENDING ? (

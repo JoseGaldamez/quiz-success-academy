@@ -1,4 +1,3 @@
-import { visibleState } from '@/app/admin/home/page';
 import { useAppSelector } from '@/lib/store';
 import { StudentInformation } from '@/models/student.model'
 import { updateStudentDetails, updateStudentState } from '@/services/students.service'
@@ -48,7 +47,7 @@ export const HeaderCheckStudent = ({ user }: { user: StudentInformation }) => {
             <div className='flex items-center justify-between'>
                 <h2 className='text-lg my-5 items-start'>
                     <strong>Estado: </strong>
-                    <span className='text-sm pl-2'> {visibleState(localState)} </span>
+                    <span className='text-sm pl-2'> {localState} </span>
                 </h2>
             </div>
 
