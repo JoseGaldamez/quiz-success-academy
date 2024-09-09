@@ -9,6 +9,7 @@ import { DayModel } from '@/models/day.model';
 import { ItemDay } from '@/components/calendar/ItemDay';
 import { setDateToCall } from '@/services/students.service';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { Hour } from '@/components/calendar/Hour';
 
 const ChooseCalendarCall = () => {
     const router = useRouter();
@@ -80,13 +81,14 @@ const ChooseCalendarCall = () => {
                     {
                         (selectedDay !== null) && selectedDay?.hours.map((hour) => {
                             return (
-                                <div onClick={() => {
-                                    setSelectedHour(hour);
-                                }} key={`${selectedDay.fullDate}-${hour}`}>
-                                    <span className={`${selectedHour === hour ? "bg-orange-600 text-white" : "bg-orange-100 text-orange-900"}  text-center p-5 mt-5 border border-slate-300 rounded-md cursor-pointer`}>
-                                        {hour}
-                                    </span>
-                                </div>
+                                <Hour key={hour}
+                                    hour={hour}
+                                    selectedDay={selectedDay}
+                                    selectedHour={selectedHour}
+                                    setSelectedHour={(hour: string) => {
+                                        setSelectedHour(hour);
+                                    }}
+                                />
                             )
                         })
                     }

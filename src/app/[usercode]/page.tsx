@@ -69,9 +69,24 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
                             {
                                 (user.state === StudentStates.TO_CALL) &&
                                 <div className='px-16 py-5 text-lg'>
-                                    <p>
-                                        You have finish your online test. We will contact you on the date and hour you have chosen to continue the process with the speaking part of this test. <strong>Please be ready and on time for the call.</strong>
-                                    </p>
+
+                                    {
+                                        user.dateToCall === undefined ? <div>
+                                            Elige una fecha para la llamada
+                                            <div className='my-16'>
+                                                <Link href={`./${params.usercode}/calendar`}
+                                                    className='bg-orange-500 
+                                rounded-lg text-white text-xl font-bold py-5 px-10'>
+                                                    Elige una fecha
+                                                </Link>
+                                            </div>
+
+                                        </div> : <p>
+                                            You have finish your online test. We will contact you on the date and hour you have chosen to continue the process with the speaking part of this test. <strong>Please be ready and on time for the call.</strong>
+                                        </p>
+                                    }
+
+
                                 </div>
                             }
 

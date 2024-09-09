@@ -25,11 +25,12 @@ const getDay = (date: Date) => {
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
                 hours: [
-                    "09:00 am",
-                    "10:00 am",
-                    "11:00 am",
-                    "04:00 pm",
-                    "05:00 pm",
+                    "08:00 am - 09:00 am",
+                    "10:00 am - 11:00 am",
+                    "01:00 pm - 02:00 pm",
+                    "02:00 pm - 03:00 pm",
+                    "03:00 pm - 04:00 pm",
+                    "05:00 pm - 06:00 pm",
                 ],
             };
         case 2:
@@ -41,11 +42,11 @@ const getDay = (date: Date) => {
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
                 hours: [
-                    "09:00 am",
-                    "10:00 am",
-                    "11:00 am",
-                    "04:00 pm",
-                    "05:00 pm",
+                    "11:00 am - 12:00 mm",
+                    "01:00 pm - 02:00 pm",
+                    "02:00 pm - 03:00 pm",
+                    "03:00 pm - 04:00 pm",
+                    "04:00 pm - 05:00 pm",
                 ],
             };
         case 3:
@@ -57,11 +58,12 @@ const getDay = (date: Date) => {
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
                 hours: [
-                    "09:00 am",
-                    "10:00 am",
-                    "11:00 am",
-                    "04:00 pm",
-                    "05:00 pm",
+                    "08:00 am - 09:00 am",
+                    "10:00 am - 11:00 am",
+                    "01:00 pm - 02:00 pm",
+                    "02:00 pm - 03:00 pm",
+                    "03:00 pm - 04:00 pm",
+                    "05:00 pm - 06:00 pm",
                 ],
             };
         case 4:
@@ -73,11 +75,10 @@ const getDay = (date: Date) => {
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
                 hours: [
-                    "09:00 am",
-                    "10:00 am",
-                    "11:00 am",
-                    "04:00 pm",
-                    "05:00 pm",
+                    "08:00 am - 09:00 am",
+                    "09:00 am - 10:00 am",
+                    "01:00 pm - 02:00 pm",
+                    "02:00 pm - 03:00 pm",
                 ],
             };
         case 5:
@@ -89,12 +90,23 @@ const getDay = (date: Date) => {
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
                 hours: [
-                    "09:00 am",
-                    "10:00 am",
-                    "11:00 am",
-                    "04:00 pm",
-                    "05:00 pm",
+                    "08:00 am - 09:00 am",
+                    "10:00 am - 11:00 am",
+                    "01:00 pm - 02:00 pm",
+                    "02:00 pm - 03:00 pm",
+                    "03:00 pm - 04:00 pm",
+                    "05:00 pm - 06:00 pm",
                 ],
+            };
+        case 6:
+            return {
+                day: "Satunday",
+                date: date.getDate(),
+                month: getMonthName(date.getMonth() + 1),
+                fullDate: `${date.getUTCFullYear()}-${
+                    date.getUTCMonth() + 1
+                }-${date.getUTCDate()}`,
+                hours: ["05:00 pm - 06:00 pm"],
             };
 
         default:
