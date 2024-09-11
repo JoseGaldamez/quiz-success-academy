@@ -10,6 +10,7 @@ import { ItemDay } from '@/components/calendar/ItemDay';
 import { setDateToCall } from '@/services/students.service';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Hour } from '@/components/calendar/Hour';
+import { getDay, registerDayEndHour } from '@/services/days.service';
 
 const ChooseCalendarCall = () => {
     const router = useRouter();
@@ -21,7 +22,6 @@ const ChooseCalendarCall = () => {
     const [listOfDays, setListOfDays] = useState<DayModel[]>([]);
     const [selectedDay, setSelectedDay] = useState<DayModel | null>(null);
     const [selectedHour, setSelectedHour] = useState<string | null>(null);
-
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -34,12 +34,21 @@ const ChooseCalendarCall = () => {
     }, []);
 
     const handleSetDateToCall = async () => {
+
+        if (selectedDay == null || selectedHour == null) return;
+
         setLoading(true);
+
         const dateToCall = {
             date: selectedDay?.fullDate,
             hour: selectedHour
         };
         await setDateToCall(currentStudent.code, dateToCall);
+
+        const dayDate = selectedDay.month + selectedDay.date;
+
+        registerDayEndHour(dayDate, selectedHour, currentStudent.code);
+
         setLoading(false);
         router.push(`finish`);
     }
@@ -67,8 +76,9 @@ const ChooseCalendarCall = () => {
                                     day={day}
                                     isSelected={selectedDay?.fullDate === day.fullDate}
                                     selectDate={(day: DayModel) => {
-                                        setSelectedDay(day);
+                                        setSelectedDay(null);
                                         setSelectedHour(null);
+                                        setSelectedDay(day);
                                     }}
                                 />
                             )
@@ -81,7 +91,7 @@ const ChooseCalendarCall = () => {
                     {
                         (selectedDay !== null) && selectedDay?.hours.map((hour) => {
                             return (
-                                <Hour key={hour}
+                                <Hour key={selectedDay.fullDate + hour}
                                     hour={hour}
                                     selectedDay={selectedDay}
                                     selectedHour={selectedHour}
