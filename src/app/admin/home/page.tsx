@@ -6,12 +6,15 @@ import Link from 'next/link';
 
 import { IoIosRefresh } from "react-icons/io";
 import { StudentInformation } from '@/models/student.model';
-import { useAppSelector } from '@/lib/store';
+import { useAppDispatch, useAppSelector } from '@/lib/store';
 import { StudentStates } from '@/types/studentStates.types';
+import { RESET_USER_STATE } from '@/lib/slices/currentStudent';
 
 
 
 const HomeAdminPage = () => {
+
+    const dispatch = useAppDispatch();
 
     const [listOfStudents, setListOfStudents] = useState<StudentInformation[]>([]);
     const [listOfStudentsBase, setListOfStudentsBase] = useState<StudentInformation[]>([]);
@@ -21,6 +24,9 @@ const HomeAdminPage = () => {
     useEffect(() => {
         // Fetch all students
         getAllStudents();
+        dispatch(RESET_USER_STATE())
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const getAllStudents = async () => {

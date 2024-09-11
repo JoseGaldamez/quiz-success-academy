@@ -23,7 +23,7 @@ const getDay = (date: Date) => {
                 month: getMonthName(date.getMonth() + 1),
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
-                }-${date.getUTCDate()}`,
+                }-${date.getDate()}`,
                 hours: [
                     "08:00 am - 09:00 am",
                     "10:00 am - 11:00 am",

@@ -13,4 +13,5 @@ export interface StudentInformation {
     dateToCall?: any;
     answers?: any;
     details?: string;
+    callDetails?: any;
 }

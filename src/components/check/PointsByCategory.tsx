@@ -11,19 +11,24 @@ export const PointByCategory = ({ user }: { user: StudentInformation }) => {
             <h2 className='mt-10 text-xl font-bold border-b-2 border-orange-500' >Point by Category</h2>
             <hr />
 
-            <div className='p-5'>
-                <p>
-                    <span className='font-bold'>Grammar:  </span>{getTotalPointOfGrammar(user.answers)} / {listOfGrammarQuestions.length}
-                </p>
-                <p>
-                    <span className='font-bold'>Comprehension:  </span>{getTotalPointOfComprehension(user.answers)} / {listOfComprehensionQuestions.length}
-                </p>
-                <p>
-                    <span className='font-bold'>Speaking:  </span>{getTotalPointOfSpeaking(user.answers)} / {listOfSpeakingQuestions.length}
-                </p>
-                <p>
-                    <span className='font-bold'>Writting:  </span>{getTotalPointOfWritting(user.answers)} / {listOfWrittingQuestions.length}
-                </p>
+            <div className='flex justify-between items-center'>
+                <div className='p-5'>
+                    <p>
+                        <span className='font-bold'>Grammar:  </span>{getTotalPointOfGrammar(user.answers)} / {listOfGrammarQuestions.length}
+                    </p>
+                    <p>
+                        <span className='font-bold'>Comprehension:  </span>{getTotalPointOfComprehension(user.answers)} / {listOfComprehensionQuestions.length}
+                    </p>
+                    <p>
+                        <span className='font-bold'>Speaking:  </span>{getTotalPointOfSpeaking(user.answers)} / {listOfSpeakingQuestions.length}
+                    </p>
+                    <p>
+                        <span className='font-bold'>Writting:  </span>{getTotalPointOfWritting(user.answers)} / {listOfWrittingQuestions.length}
+                    </p>
+                </div>
+                <div>
+                    <span className='text-2xl font-bold text-orange-500 mr-5'>{getTotal(user.answers)} / 50</span>
+                </div>
             </div>
             <hr />
 
@@ -67,6 +72,18 @@ const getTotalPointOfComprehension = (answers: any) => {
     return total;
 }
 
+const getTotal = (answers: any) => {
+
+    const allKeys = Object.keys(answers);
+    let total: number = 0;
+
+    allKeys.forEach(anwerKey => {
+        const answer = answers[anwerKey];
+        total += answer.points;
+    })
+
+    return total;
+}
 const getTotalPointOfSpeaking = (answers: any) => {
 
     const allKeys = Object.keys(answers);
