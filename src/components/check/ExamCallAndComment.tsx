@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { StudentInformation } from '@/models/student.model'
 import { StudentStates } from '@/types/studentStates.types'
 import { updateStudentCalled, updateStudentState } from '@/services/students.service';
+import { useAppSelector } from '@/lib/store';
 
 export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
+    const auth = useAppSelector((state) => state.auth);
+
     const [called, setcalled] = useState(false);
     const [comment, setComment] = useState('');
     const [oralProduction, setOralProduction] = useState('');
@@ -14,6 +17,33 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
         await updateStudentCalled(user.code, comment, Number(oralProduction));
         await updateStudentState(user.code, StudentStates.CALLED);
         setFinished(true);
+    }
+
+    const handleRecomendedLevel = () => {
+        const examPoints = getTotal(user.answers);
+        const callPoints = Number(oralProduction);
+        const totalPoints = examPoints + callPoints;
+
+        if (totalPoints < 40) {
+            return "Nivel 1";
+        } else if (totalPoints < 76) {
+            return "Nivel 2";
+        } else if (totalPoints < 100) {
+            return "Nivel 3";
+        }
+    }
+
+    const getTotal = (answers: any) => {
+
+        const allKeys = Object.keys(answers);
+        let total: number = 0;
+
+        allKeys.forEach(anwerKey => {
+            const answer = answers[anwerKey];
+            total += answer.points;
+        })
+
+        return total;
     }
 
 
@@ -60,7 +90,7 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
                 (finished === true) && (
                     <div>
 
-                        <h2 className='mt-10 text-xl font-bold border-b-2 border-orange-500' >Oral Production <span onClick={() => { setFinished(false) }} className='text-orange-200 hover:text-orange-500 cursor-pointer text-sm' >Editar</span> </h2>
+                        <h2 className='mt-10 text-xl font-bold border-b-2 border-orange-500' >Oral Production {auth.email !== "sac@successacademyhn.com" && (<span onClick={() => { setFinished(false) }} className='text-orange-200 hover:text-orange-500 cursor-pointer text-sm' >Editar</span>)} </h2>
                         <hr />
                         <div className='flex justify-between items-center'>
                             <div className='m-5'>
@@ -69,6 +99,13 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
                             <div className='min-w-48 text-end'>
                                 <span className='text-2xl font-bold text-orange-500 m-5'>{oralProduction} / 50</span>
                             </div>
+                        </div>
+                        <div className='m-5 text-center p-5 bg-orange-50 rounded-lg'>
+                            <p> <strong>Nivel recomendado</strong> </p>
+                            <span className='text-2xl font-bold text-orange-500 m-5 block'>{handleRecomendedLevel()}</span>
+                            <span className="text-sm text-gray-400 px-10 block" >
+                                * Este nivel se recomienda en base a la calificación numérica. Si se desea recomendar otro nivel puede especificarse en los comentarios
+                            </span>
                         </div>
                     </div>
                 )

@@ -17,9 +17,11 @@ const HomeAdminPage = () => {
     const dispatch = useAppDispatch();
 
     const [listOfStudents, setListOfStudents] = useState<StudentInformation[]>([]);
+    const [listOfStudentsChecked, setListOfStudentsChecked] = useState<StudentInformation[]>([]);
     const [listOfStudentsBase, setListOfStudentsBase] = useState<StudentInformation[]>([]);
     const auth = useAppSelector((state) => state.auth);
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         // Fetch all students
@@ -43,16 +45,43 @@ const HomeAdminPage = () => {
             return response[key];
         });
 
-        const orderedArray = responseArray.sort((a, b) => {
-            const dateA = a.dateToCall ? a.dateToCall.date : "";
-            const dateB = b.dateToCall ? b.dateToCall.date : "";
+        // Extraer solo los usuarios requeridos
+        const noChecked: StudentInformation[] = [];
+        const checked: StudentInformation[] = [];
+        responseArray.forEach(student => {
+            if (student.state === StudentStates.CALLED || student.state === StudentStates.REGISTERED || student.state === StudentStates.NO_REGISTERED) {
+                checked.push(student);
+            } else {
+                noChecked.push(student);
+            }
+        })
 
-            return dateA.localeCompare(dateB)
-        });
+        if (auth.email === "sac@successacademyhn.com") {
+            const orderedArray = checked.sort((a, b) => {
+                const dateA = a.dateToCall ? a.dateToCall.date : "";
+                const dateB = b.dateToCall ? b.dateToCall.date : "";
 
-        setListOfStudents(orderedArray);
-        setListOfStudentsBase(orderedArray);
-        setLoading(false);
+                return dateA.localeCompare(dateB)
+            });
+
+            setListOfStudents(orderedArray);
+            setListOfStudentsBase(orderedArray);
+            setLoading(false);
+        } else {
+            const orderedArray = noChecked.sort((a, b) => {
+                const dateA = a.dateToCall ? a.dateToCall.date : "";
+                const dateB = b.dateToCall ? b.dateToCall.date : "";
+
+                return dateA.localeCompare(dateB)
+            });
+
+            setListOfStudents(orderedArray);
+            setListOfStudentsBase(orderedArray);
+            setListOfStudentsChecked(checked);
+            setLoading(false);
+
+        }
+
 
     };
 
@@ -92,7 +121,7 @@ const HomeAdminPage = () => {
             <hr />
 
             <div className='flex justify-between items-center mt-5'>
-                <h3 className='text-xl'>Lista de usuarios</h3>
+                <h3 className='text-xl'>Lista de estudiantes</h3>
                 {
                     auth.email !== "guest@successacademyhn.com" && (
                         <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
@@ -148,6 +177,56 @@ const HomeAdminPage = () => {
                             }
                         </tbody>
                     </table>
+                )
+            }
+
+            {
+                listOfStudentsChecked.length > 0 && (
+                    <div>
+
+                        <div className='flex justify-between items-center mt-40'>
+                            <h3 className='text-xl'>Lista de estudiantes evaluados</h3>
+                        </div>
+
+                        {
+                            listOfStudentsChecked.length > 0 && !loading && (
+                                <table className='w-full mt-5'>
+                                    <thead>
+                                        <tr className='bg-slate-200 text-left'>
+                                            <th className='p-3'>Nombre</th>
+                                            <th className='p-3'>Correo</th>
+                                            <th className='p-3'>Fecha</th>
+                                            <th className='p-3'>Estado</th>
+                                            <th className='p-3'>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            listOfStudentsChecked.map(student => (
+                                                <tr key={student.code}>
+                                                    <td className='p-5'>{student.name}</td>
+                                                    <td className='p-5'>{student.email}</td>
+                                                    <td className='p-5'>{student.dateToCall?.date}</td>
+                                                    <td className='p-5'>{visibleState(student.state)}</td>
+                                                    <td className='p-5'>
+                                                        {
+                                                            student.state === StudentStates.PENDING ? (
+                                                                <span>No disponible</span>
+                                                            ) : (
+                                                                <Link className='bg-orange-500 text-white px-2 py-1 rounded' href={`/admin/check-student/${student.code}`}>Revisar</Link>
+                                                            )
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </table>
+                            )
+                        }
+
+                    </div>
+
                 )
             }
         </div>

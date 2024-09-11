@@ -13,6 +13,7 @@ import { CheckAnswerRecordedQuestion } from '@/components/check/CheckAnswerRecor
 import { CheckAnswerInputQuestion } from '@/components/check/CheckAnswerInputQuestion';
 import { PointByCategory } from '@/components/check/PointsByCategory';
 import { ExamCallAndComment } from '@/components/check/ExamCallAndComment';
+import Link from 'next/link';
 
 const CheckStudent = ({ params }: { params: { usercode: string } }) => {
 
@@ -95,6 +96,13 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
             {
                 (user.code !== "") && (
                     <div className='px-10'>
+
+                        <span className='text-lg font-bold w-10 h-10 flex justify-center items-center bg-orange-500 text-white rounded-full fixed bottom-10 left-10'>
+                            <Link href={"/admin/home"}> <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                            </svg></Link>
+                        </span>
+
                         <HeaderCheckStudent user={user} />
 
                         {
