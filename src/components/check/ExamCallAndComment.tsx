@@ -20,9 +20,8 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
     }
 
     const handleRecomendedLevel = () => {
-        const examPoints = getTotal(user.answers);
-        const callPoints = Number(oralProduction);
-        const totalPoints = examPoints + callPoints;
+
+        const totalPoints = getTotalPoints();
 
         if (totalPoints < 40) {
             return "Nivel 1";
@@ -31,6 +30,16 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
         } else if (totalPoints < 100) {
             return "Nivel 3";
         }
+    }
+
+    const getTotalPoints = () => {
+
+        const examPoints = getTotal(user.answers);
+        const callPoints = Number(oralProduction);
+        const totalPoints = examPoints + callPoints;
+
+        return totalPoints;
+
     }
 
     const getTotal = (answers: any) => {
@@ -58,7 +67,7 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
     }, []);
 
     return (
-        <div className='pb-36'>
+        <div className='pb-10'>
             {
                 (user.state === StudentStates.TO_CALL && called === false) && (
                     <div>
@@ -101,7 +110,7 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
                             </div>
                         </div>
                         <div className='m-5 text-center p-5 bg-orange-50 rounded-lg'>
-                            <p> <strong>Nivel recomendado</strong> </p>
+                            <p> <strong>Nivel recomendado ( <span>{getTotalPoints()} puntos</span> ) </strong> </p>
                             <span className='text-2xl font-bold text-orange-500 m-5 block'>{handleRecomendedLevel()}</span>
                             <span className="text-sm text-gray-400 px-10 block" >
                                 * Este nivel se recomienda en base a la calificación numérica. Si se desea recomendar otro nivel puede especificarse en los comentarios

@@ -14,11 +14,14 @@ import { CheckAnswerInputQuestion } from '@/components/check/CheckAnswerInputQue
 import { PointByCategory } from '@/components/check/PointsByCategory';
 import { ExamCallAndComment } from '@/components/check/ExamCallAndComment';
 import Link from 'next/link';
+import { SACComments } from '@/components/check/SACComments';
 
 const CheckStudent = ({ params }: { params: { usercode: string } }) => {
 
     const dispatch = useAppDispatch();
     const user = useAppSelector((state) => state.currentStudent);
+    const auth = useAppSelector((state) => state.auth);
+
 
     const [questionsList, setQuestionsList] = useState<any[]>([]);
 
@@ -123,6 +126,12 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                         <PointByCategory user={user} />
 
                         <ExamCallAndComment user={user} />
+
+                        {
+                            auth.email === "sac@successacademyhn.com" && (
+                                <SACComments user={user} />
+                            )
+                        }
 
 
                         <h3 className='mt-10 text-xl font-bold border-b-2 border-orange-500'>Answers</h3>
