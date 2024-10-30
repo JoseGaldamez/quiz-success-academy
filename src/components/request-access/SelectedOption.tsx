@@ -2,7 +2,7 @@ import React from 'react'
 import { WhatsappContact } from './WhatsappContact'
 import { CallContact } from './CallContact'
 import { EmailContact } from './EmailContact'
-import SaleText from './SaleText'
+import SaleForm from '../sale/SaleFrom'
 
 export const SelectedOption = ({ selected }: { selected: number | null }) => {
 
@@ -15,7 +15,7 @@ export const SelectedOption = ({ selected }: { selected: number | null }) => {
             case 2:
                 return <EmailContact />
             case 3:
-                return <SaleText amount={300.00} />
+                return <SaleForm amount={300.00} />
             default:
                 return <div>Selecciona una opción</div>
         }
