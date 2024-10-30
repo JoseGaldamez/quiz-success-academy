@@ -1,8 +1,8 @@
-import { createSale } from '@/app/api/ptranz/createSale';
-import { Transaction } from '@/models/transaction.model';
+import {v4 as uuidv4} from 'uuid';
 import { useState } from 'react';
+import { Transaction } from '@/models/transaction.model';
 
-const SaleComponent = ({ amount }: { amount: number | null }) => {
+const SaleForm = ({ amount }: { amount: number | null }) => {
 
   const [transaction, setTransaction] = useState<TransactionResponse>({
     TransactionType: 0,
@@ -30,6 +30,8 @@ const SaleComponent = ({ amount }: { amount: number | null }) => {
     PhoneNumber: ''
   });
 
+  const [processing, setProcessing] = useState(true)
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
@@ -40,11 +42,11 @@ const SaleComponent = ({ amount }: { amount: number | null }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted data:", formData);
-    // Aquí puedes manejar el envío de los datos (e.g., enviarlos a una API)
+    handleCreateSale();
   };
 
   const handleCreateSale = async () => {
+    
     const saleData: Transaction = {
       TransactionIdentifier: '',
       TotalAmount: amount || 0,
@@ -57,8 +59,6 @@ const SaleComponent = ({ amount }: { amount: number | null }) => {
         CardholderName: formData.CardholderName,
       },
       BillingAddress: {
-        FirstName: '',
-        LastName: '',
         Line1: formData.AddressLine1,
         City: formData.City,
         State: formData.State,
@@ -73,17 +73,45 @@ const SaleComponent = ({ amount }: { amount: number | null }) => {
           ChallengeWindowSize: 4,
           ChallengeIndicator: '01'
         },
-        MerchantResponseUrl: 'https://successacademyhn.com/'
+        MerchantResponseUrl: ' https://quiz-success-academy.vercel.app/finish-sale'
       },
       OrderIdentifier: ''
     };
 
     try {
-      console.log(saleData);
-      const result = await createSale(saleData);
-      setTransaction(result);
+      setProcessing(true);
+
+      const transactionIdentifier = uuidv4();
+
+      const response = await fetch('/api/sale', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          TransactionIdentifier: transactionIdentifier,
+          TotalAmount: saleData.TotalAmount,
+          CurrencyCode: saleData.CurrencyCode,
+          ThreeDSecure: saleData.ThreeDSecure,
+          Source: saleData.Source,
+          OrderIdentifier: `ORDER_${transactionIdentifier}`,
+          BillingAddress: saleData.BillingAddress,
+          AddressMatch: saleData.AddressMatch,
+          ExtendedData: saleData.ExtendedData,
+        }),
+      });
+      if(response.status === 200) {
+        console.log(response)
+        const data = await response.json();
+
+        if(!data.error){
+          setTransaction(data.data);
+          setProcessing(false);
+        }
+      }
     } catch (error) {
       console.error('Error processing sale:', error);
+      setProcessing(false);
     }
   };
 
@@ -151,11 +179,14 @@ const SaleComponent = ({ amount }: { amount: number | null }) => {
           <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="tel" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleChange} required />
       </div>
 
-      <button onClick={() => handleCreateSale()} className='px-16 py-3 bg-slate-600 block mt-8 w-72 mx-auto text-white font-bold rounded-lg' type="submit">Submit</button>
+      {<button className='px-16 py-3 bg-slate-600 block mt-8 w-72 mx-auto text-white font-bold rounded-lg' type="submit">Pagar</button>}
     </form>
-    { transaction.IsoResponseCode === "SP4" && <iframe srcDoc={transaction.RedirectData}></iframe> }
+    { (transaction.IsoResponseCode === "SP4" && !processing) && <iframe width="100%" srcDoc={transaction.RedirectData}></iframe> }
+    { (transaction.IsoResponseCode !== "SP4" && !processing) && <h4 className='text-orange-700'>Erro en el procesamiento del pago - verifique la información del pago e intente nuevamente</h4>
+ }
+
     </div>
   );
 };
 
-export default SaleComponent;
+export default SaleForm;
