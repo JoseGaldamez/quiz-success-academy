@@ -73,7 +73,7 @@ const SaleForm = ({ amount }: { amount: number | null }) => {
           ChallengeWindowSize: 4,
           ChallengeIndicator: '01'
         },
-        MerchantResponseUrl: ' https://quiz-success-academy.vercel.app/finish-sale'
+        MerchantResponseUrl: 'https://quiz-success-academy.vercel.app/finish-sale'
       },
       OrderIdentifier: ''
     };
