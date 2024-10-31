@@ -18,6 +18,7 @@ export async function POST(request: Request, response: NextApiResponse) {
         'Content-Type': 'application/json'
       }});
 
+      console.log(response);
       if(response.status === 200){
         if(response.data.Approved){
             return Response.json({ error: false, data: response.data });
