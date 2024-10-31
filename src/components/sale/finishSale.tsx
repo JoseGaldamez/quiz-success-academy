@@ -17,7 +17,6 @@ export const FinishSale = () => {
     async function makePayment(){
         if(spiToken == "null") {
             setPaymentStatus("No se pudo procesar el pago")
-            setColor("text-red-700")
             return;
         }
 

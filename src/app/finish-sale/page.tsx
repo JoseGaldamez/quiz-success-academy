@@ -1,7 +1,7 @@
 import { MenuBar } from '@/common/MenuBar'
 import { TopBar } from '@/common/TopBar'
 import { FinishSale } from '@/components/sale/finishSale'
-import React, { useEffect } from 'react'
+import React, { Suspense } from 'react'
 
 const FinishSalePage = () => {
 
@@ -9,7 +9,7 @@ const FinishSalePage = () => {
         <div>
             <TopBar />
             <MenuBar />
-            <FinishSale/>
+            <Suspense><FinishSale/></Suspense>
         </div>
     )
 }
