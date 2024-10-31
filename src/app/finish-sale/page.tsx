@@ -1,9 +1,10 @@
 import { MenuBar } from '@/common/MenuBar'
 import { TopBar } from '@/common/TopBar'
 import { FinishSale } from '@/components/sale/finishSale'
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const RequestAccessPage = () => {
+const FinishSalePage = () => {
+
     return (
         <div>
             <TopBar />
@@ -13,4 +14,4 @@ const RequestAccessPage = () => {
     )
 }
 
-export default RequestAccessPage
+export default FinishSalePage

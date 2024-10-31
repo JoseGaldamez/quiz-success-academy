@@ -59,11 +59,6 @@ const SaleForm = ({ amount }: { amount: number | null }) => {
         CardholderName: formData.CardholderName,
       },
       BillingAddress: {
-        Line1: formData.AddressLine1,
-        City: formData.City,
-        State: formData.State,
-        PostalCode: formData.PostalCode,
-        CountryCode: '340',
         EmailAddress: formData.EmailAddress,
         PhoneNumber: formData.PhoneNumber
       },
@@ -73,7 +68,8 @@ const SaleForm = ({ amount }: { amount: number | null }) => {
           ChallengeWindowSize: 4,
           ChallengeIndicator: '01'
         },
-        MerchantResponseUrl: 'https://quiz-success-academy.vercel.app/finish-sale'
+        MerchantResponseUrl: 'http://localhost:3000/api/finish-sale/'
+        
       },
       OrderIdentifier: ''
     };
@@ -101,9 +97,7 @@ const SaleForm = ({ amount }: { amount: number | null }) => {
         }),
       });
       if(response.status === 200) {
-        console.log(response)
         const data = await response.json();
-
         if(!data.error){
           setTransaction(data.data);
           setProcessing(false);
@@ -145,30 +139,6 @@ const SaleForm = ({ amount }: { amount: number | null }) => {
       </div>
 
       <div className='px-5 py-2'>
-          <label className='block text-sm font-medium text-slate-900'>Dirección</label>
-          <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="text" name="AddressLine1" value={formData.AddressLine1} onChange={handleChange} required />
-      </div>
-
-      <div className="flex">
-
-        <div className='px-5 py-2'>
-            <label className='block text-sm font-medium text-slate-900'>Cuidad</label>
-            <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="text" name="City" value={formData.City} onChange={handleChange} required />
-        </div>
-
-        <div className='px-5 py-2'>
-            <label className='block text-sm font-medium text-slate-900'>Departamento</label>
-            <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="text" name="State" value={formData.State} onChange={handleChange} required />
-        </div>
-
-        <div className='px-5 py-2'>
-            <label className='block text-sm font-medium text-slate-900'>Postal Code</label>
-            <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="number" name="PostalCode" value={formData.PostalCode} onChange={handleChange} required />
-        </div>
-
-      </div>
-
-      <div className='px-5 py-2'>
           <label className='block text-sm font-medium text-slate-900'>Correo electrónico</label>
           <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="email" name="EmailAddress" value={formData.EmailAddress} onChange={handleChange} required />
       </div>
@@ -179,12 +149,11 @@ const SaleForm = ({ amount }: { amount: number | null }) => {
           <input className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' type="tel" name="PhoneNumber" value={formData.PhoneNumber} onChange={handleChange} required />
       </div>
 
-      {<button className='px-16 py-3 bg-slate-600 block mt-8 w-72 mx-auto text-white font-bold rounded-lg' type="submit">Pagar</button>}
+      {(transaction.IsoResponseCode !== "SP4" && !processing) && <button className='px-16 py-3 bg-slate-600 block mt-8 w-72 mx-auto text-white font-bold rounded-lg' type="submit">Pagar</button>}
     </form>
     { (transaction.IsoResponseCode === "SP4" && !processing) && <iframe width="100%" srcDoc={transaction.RedirectData}></iframe> }
-    { (transaction.IsoResponseCode !== "SP4" && !processing) && <h4 className='text-orange-700'>Erro en el procesamiento del pago - verifique la información del pago e intente nuevamente</h4>
- }
-
+    { (transaction.IsoResponseCode !== "SP4" && !processing) && <h4 className='text-orange-700'>Erro en el procesamiento del pago - verifique la información del pago e intente nuevamente</h4>}
+ 
     </div>
   );
 };

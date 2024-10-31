@@ -11,11 +11,6 @@ export interface Transaction{
     };
     OrderIdentifier: string;
     BillingAddress: {
-      Line1: string;
-      City: string;
-      State: string;
-      PostalCode: string;
-      CountryCode: string;
       EmailAddress: string;
       PhoneNumber: string;
     };
