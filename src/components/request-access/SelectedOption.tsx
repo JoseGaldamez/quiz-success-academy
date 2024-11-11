@@ -15,9 +15,9 @@ export const SelectedOption = ({ selected }: { selected: number | null }) => {
             case 2:
                 return <EmailContact />
             case 3:
-                return <SaleForm amount={300.00} />
+                return <SaleForm amount={50.00} />
             default:
-                return <div>Selecciona una opción</div>
+                return <div className='text-center mt-20'>Selecciona una opción</div>
         }
     }
     return renderSelectedOption()

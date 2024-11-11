@@ -1,6 +1,7 @@
 import axios from "axios";
 import { NextApiResponse } from "next";
 
+// mentenemos la función pero ya no se está usando en ningún lugar
 export async function POST(request: Request, response: NextApiResponse) {
     if (request.method !== "POST") {
         return response
@@ -13,22 +14,28 @@ export async function POST(request: Request, response: NextApiResponse) {
     const spiToken = bodyMessage.spiToken;
 
     try {
-      const response = await axios.post(`${POWERTRANZ_API_URL}/payment`, `${spiToken}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      }});
+        const response = await axios.post(
+            `${POWERTRANZ_API_URL}/payment`,
+            `${spiToken}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
 
-      console.log(response);
-      if(response.status === 200){
-        if(response.data.Approved){
-            return Response.json({ error: false, data: response.data });
+        console.log(response);
+        if (response.status === 200) {
+            if (response.data.Approved) {
+                return Response.json({ error: false, data: response.data });
+            } else {
+                return Response.json({
+                    error: true,
+                    data: { error: "Pago no aprobado" },
+                });
+            }
         }
-        else{
-            return Response.json({ error: true, data: {error: "Pago no aprobado"} });
-        }
-      }
     } catch (error) {
-      return Response.json({ error: true, desciption: error});
+        return Response.json({ error: true, desciption: error });
     }
 }
-

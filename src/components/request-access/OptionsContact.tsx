@@ -19,7 +19,7 @@ const options = [
     },
     {
         id: 3,
-        name: 'Formulario',
+        name: 'Pagar con tarjeta',
     },
 ]
 
@@ -46,7 +46,9 @@ export const OptionsContact = () => {
                 }
             </div>
 
+            <div className='max-w-2xl mx-auto'>
                 <SelectedOption selected={selectedOption} />
+            </div>
 
         </section>
     )
