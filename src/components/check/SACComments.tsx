@@ -1,19 +1,35 @@
 import { StudentInformation } from '@/models/student.model'
-import { useState } from 'react';
+import { updateStudentSAC, updateStudentState } from '@/services/students.service';
+import { StudentStates } from '@/types/studentStates.types';
+import { useEffect, useState } from 'react';
 
 export const SACComments = ({ user }: { user: StudentInformation }) => {
 
     const [called, setCalled] = useState(false);
     const [registered, setRegistered] = useState('1');
     const [comment, setComment] = useState('');
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        if (user.sac) {
+            setCalled(true);
+            setRegistered(user.sac.registered ? '1' : '0');
+            setComment(user.sac.comment);
+        }
+    }, [user]);
 
     const saveSACInformation = async () => {
-        console.log({
-            code: user.code,
-            registered,
-            comment
-        });
 
+        setSaving(true);
+
+        const result = await updateStudentSAC(user.code, comment, registered);
+        if (result.registered) {
+            await updateStudentState(user.code, StudentStates.REGISTERED);
+        } else {
+            await updateStudentState(user.code, StudentStates.NO_REGISTERED);
+        }
+
+        setSaving(false);
 
     }
 
@@ -44,7 +60,9 @@ export const SACComments = ({ user }: { user: StudentInformation }) => {
                             <textarea value={comment} onChange={(e) => { setComment(e.target.value) }} placeholder='Observaciones' className='p-5 my-5 border w-full' name="commentRegistered" rows={4} cols={50} id="commentRegistered"></textarea>
                         </div>
 
-                        <button type="button" onClick={saveSACInformation} className='bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full mt-5 w-full mb-10'>Guardar cambios</button>
+                        <button disabled={saving} type="button" onClick={saveSACInformation} className='bg-orange-500 disabled:bg-gray-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-full mt-5 w-full mb-10'>
+                            {saving ? "Guardando..." : "Guardar cambios"}
+                        </button>
 
                     </section>
                 )

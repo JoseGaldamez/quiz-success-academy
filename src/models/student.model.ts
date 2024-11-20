@@ -14,4 +14,5 @@ export interface StudentInformation {
     answers?: any;
     details?: string;
     callDetails?: any;
+    sac?: any;
 }

@@ -36,6 +36,7 @@ export const testCurrentUser = createSlice({
             state.answers = {};
             state.details = "";
             state.callDetails = undefined;
+            state.sac = undefined;
         },
         SET_USER_STATE: (state, action: PayloadAction<StudentInformation>) => {
             state.name = action.payload.name;
@@ -51,6 +52,7 @@ export const testCurrentUser = createSlice({
             state.answers = action.payload.answers;
             state.details = action.payload.details;
             state.callDetails = action.payload.callDetails;
+            state.sac = action.payload.sac;
         },
         UPDATE_ANSWER: (
             state,

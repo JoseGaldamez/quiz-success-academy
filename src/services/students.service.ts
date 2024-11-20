@@ -110,6 +110,34 @@ export const updateStudentCalled = async (
     }
 };
 
+export const updateStudentSAC = async (
+    id: string,
+    comment: string,
+    registered: string
+) => {
+    try {
+        const registeredBoolean = registered === "1" ? true : false;
+
+        const body = {
+            comment,
+            registered: registeredBoolean,
+        };
+
+        const response = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/sac.json`,
+            {
+                method: "PUT",
+                body: JSON.stringify(body),
+            }
+        );
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        return null;
+    }
+};
+
 export const updateStudentDetails = async (id: string, details: string) => {
     try {
         const response = await fetch(
