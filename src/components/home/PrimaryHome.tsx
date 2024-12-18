@@ -10,7 +10,7 @@ export const PrimaryHome = () => {
                 <h2 className={styles.subtitle}>Prueba tu <strong>nivel de inglés</strong></h2>
                 <h1 className={styles.title}>Quiz <span className={styles.titleUnderline}>Success Academy</span></h1>
                 <p className={styles.info}>Con nuestra prueba de inglés interactiva podrás probar tu <strong>gramática, ortografía, pronunciación y escucha</strong>. Y con una llamada de un profesor experto podrás conocer tu nivel definitivo.</p>
-                <Link className={styles.buttonStart} href="/quiz">
+                <Link className={styles.buttonStart} href="/request-access">
                     Comenzar
                 </Link>
             </div>
