@@ -21,7 +21,6 @@
     "microsoft-cognitiveservices-speech-sdk": "^1.36.0",
     "moment": "^2.30.1",
     "next": "14.1.4",
-    "nodemailer": "^6.9.14",
     "react": "^18",
     "react-audio-voice-recorder": "^2.2.0",
     "react-dom": "^18",
@@ -36,7 +35,6 @@
   "devDependencies": {
     "@types/lodash": "^4.17.0",
     "@types/node": "^20",
-    "@types/nodemailer": "^6.4.15",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/wav": "^1.0.4",
