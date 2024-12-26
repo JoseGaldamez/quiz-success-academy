@@ -10,11 +10,11 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-export const sendMessage = async (mesageBody: string, email: string) => {
+export const sendMessage = async (mesageBody: string) => {
     const messageOptions = {
-        from: `"Success Academy" <${process.env.EMAIL_USERNAME}>`,
-        to: email,
-        subject: "Points.",
+        from: `"Success Academy Quiz" <${process.env.EMAIL_USERNAME}>`,
+        to: "coordinacion.academica@successacademyhn.com,josegaldamez1991@gmail.com,Successacademy0101@gmail.com",
+        subject: "Student has finished the quiz",
         text: mesageBody,
     };
 

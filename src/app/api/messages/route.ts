@@ -11,17 +11,21 @@ export async function POST(request: Request, response: NextApiResponse) {
 
     const bodyMessage = await request.json();
 
-    if (!bodyMessage || !bodyMessage.message || !bodyMessage.email) {
+    if (!bodyMessage || !bodyMessage.message) {
         return Response.json({
-            error: true,
+            success: false,
             description: "Bad Request, some props are missing.",
         });
     }
 
     try {
-        await sendMessage(bodyMessage.message, bodyMessage.email);
-        return Response.json({ error: false, description: "Message sent" });
+        await sendMessage(bodyMessage.message);
+        return Response.json({
+            success: true,
+            description: "Message sent",
+            bodyMessage,
+        });
     } catch (error) {
-        return Response.json({ error: true, description: error });
+        return Response.json({ success: false, description: error });
     }
 }

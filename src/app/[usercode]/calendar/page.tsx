@@ -11,6 +11,7 @@ import { setDateToCall } from '@/services/students.service';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Hour } from '@/components/calendar/Hour';
 import { getDay, registerDayEndHour } from '@/services/days.service';
+import { sendMessage } from '@/services/messages.service';
 
 const ChooseCalendarCall = () => {
     const router = useRouter();
@@ -50,6 +51,12 @@ const ChooseCalendarCall = () => {
         registerDayEndHour(dayDate, selectedHour, currentStudent.code);
 
         setLoading(false);
+
+
+        const message = `The student ${currentStudent.name} (${currentStudent.code}) has finished the online quiz and selected the date ${selectedDay.fullDate} at ${selectedHour} for the call.`;
+
+        await sendMessage(message);
+
         router.push(`finish`);
     }
 
