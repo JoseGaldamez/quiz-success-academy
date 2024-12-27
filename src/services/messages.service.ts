@@ -13,7 +13,7 @@
 export const sendMessage = async (mesageBody: string) => {
     const messageOptions = {
         from: `"Success Academy Quiz" <${process.env.EMAIL_USERNAME}>`,
-        to: "coordinacion.academica@successacademyhn.com,josegaldamez1991@gmail.com,Successacademy0101@gmail.com",
+        to: "coordinacion.academica@successacademyhn.com,josegaldamez1991@gmail.com,Successacademy0101@gmail.com,sac@successacademyhn.com",
         subject: "Student has finished the quiz",
         content: mesageBody,
     };
