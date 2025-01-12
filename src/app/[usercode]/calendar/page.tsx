@@ -50,13 +50,25 @@ const ChooseCalendarCall = () => {
 
         registerDayEndHour(dayDate, selectedHour, currentStudent.code);
 
-        setLoading(false);
-
-
         const message = `The student ${currentStudent.name} (${currentStudent.code}) has finished the online quiz and selected the date ${selectedDay.fullDate} at ${selectedHour} for the call.`;
 
-        await sendMessage(message);
+        const messageOptions = {
+            from: `"Success Academy Quiz" <${process.env.EMAIL_USERNAME}>`,
+            to: "coordinacion.academica@successacademyhn.com,josegaldamez1991@gmail.com,Successacademy0101@gmail.com,sac@successacademyhn.com",
+            subject: "Student has finished the quiz",
+            content: message,
+        };
 
+        const res = await fetch("https://success-academy-emails.vercel.app/api/sendEmail", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            },
+            body: JSON.stringify(messageOptions),
+        });
+
+        setLoading(false);
         router.push(`finish`);
     }
 

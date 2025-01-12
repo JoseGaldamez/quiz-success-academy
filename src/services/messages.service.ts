@@ -10,6 +10,7 @@
 //     },
 // });
 
+// this should work, but is not used.
 export const sendMessage = async (mesageBody: string) => {
     const messageOptions = {
         from: `"Success Academy Quiz" <${process.env.EMAIL_USERNAME}>`,
@@ -18,10 +19,11 @@ export const sendMessage = async (mesageBody: string) => {
         content: mesageBody,
     };
 
-    await fetch("https://send-mails-api-next-js.vercel.app/api/sendEmail", {
+    await fetch("https://success-academy-emails.vercel.app/api/sendEmail", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify(messageOptions),
     });

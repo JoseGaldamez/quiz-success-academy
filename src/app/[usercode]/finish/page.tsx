@@ -1,8 +1,8 @@
-import { MenuBar } from '@/common/MenuBar'
 import Link from 'next/link'
-import React from 'react'
+import { MenuBar } from '@/common/MenuBar'
 
 const FinishPage = () => {
+
     return (
         <div>
             <MenuBar showRequestAccessButton={false} />
