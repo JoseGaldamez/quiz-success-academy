@@ -174,6 +174,26 @@ export const updateStudentState = async (id: string, state: string) => {
     }
 };
 
+export const initQuizStudent = async (id: string) => {
+    const currentDate = new Date();
+
+    try {
+        const response = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}/initedQuizDate.json`,
+            {
+                method: "PUT",
+                body: JSON.stringify(currentDate),
+            }
+        );
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        return null;
+    }
+};
+
 export const setDateToCall = async (id: string, date: any) => {
     try {
         const response = await fetch(

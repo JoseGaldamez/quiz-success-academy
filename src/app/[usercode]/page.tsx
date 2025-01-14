@@ -16,6 +16,7 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
     const dispatch = useAppDispatch();
 
     const [user, setUser] = useState<StudentInformation | undefined | null>(undefined);
+    const [thereIsTime, setThereIsTime] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -41,7 +42,27 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
         }
         setUser(student);
         setLoading(false);
-        dispatch(SET_USER_STATE(student));
+
+        if (student.initedQuizDate === undefined) {
+            dispatch(SET_USER_STATE(student));
+            setThereIsTime(true);
+        } else {
+            // check if there is still time
+            const initedQuizDate = new Date(student.initedQuizDate).getTime();
+            const currentDate = new Date().getTime();
+
+            // milisecont from init
+            const timer = currentDate - initedQuizDate;
+
+            const admintedTime = 1000 * 60 * 90; //
+            if (timer < admintedTime) {
+                dispatch(SET_USER_STATE(student));
+                setThereIsTime(true);
+            } else {
+                setThereIsTime(false);
+            }
+        }
+
     }
 
 
@@ -55,14 +76,26 @@ const UserCodeCheckPage = ({ params }: { params: { usercode: string } }) => {
                     {
                         (user != null) ? <div>
                             <h2 className='text-2xl my-5'>Bienvenido <strong>{user?.name}</strong></h2>
+
                             {
-                                (user.state === StudentStates.PENDING || user.state === StudentStates.IN_PROGRESS) &&
+                                ((user.state === StudentStates.PENDING || user.state === StudentStates.IN_PROGRESS) && thereIsTime) &&
                                 <div className='my-16'>
                                     <Link href={`./${params.usercode}/placement`}
                                         className='bg-orange-500 
                                 rounded-lg text-white text-xl font-bold py-5 px-10'>
                                         Comenzar prueba
                                     </Link>
+                                </div>
+                            }
+
+                            {
+                                ((user.state === StudentStates.PENDING || user.state === StudentStates.IN_PROGRESS) && !thereIsTime) &&
+                                <div className='my-16'>
+                                    <span
+                                        className='bg-gray-400 
+                                rounded-lg text-gray-500 text-xl font-bold py-5 px-10'>
+                                        El tiempo para realizar la prueba ha acabado
+                                    </span>
                                 </div>
                             }
 

@@ -13,6 +13,11 @@ const initialState: StudentInformation = {
     phone: "",
     city: "",
     state: StudentStates.PENDING,
+    initedQuizDate: undefined,
+    answers: {},
+    details: "",
+    callDetails: undefined,
+    sac: undefined,
     code: "",
     currentQuestion: 0,
     dateToCall: null,
@@ -30,6 +35,7 @@ export const testCurrentUser = createSlice({
             state.phone = "";
             state.city = "";
             state.state = StudentStates.PENDING;
+            state.initedQuizDate = undefined;
             state.code = "";
             state.currentQuestion = 0;
             state.dateToCall = null;
@@ -48,11 +54,15 @@ export const testCurrentUser = createSlice({
             state.state = action.payload.state;
             state.code = action.payload.code;
             state.currentQuestion = action.payload.currentQuestion;
+            state.initedQuizDate = action.payload.initedQuizDate;
             state.dateToCall = action.payload.dateToCall;
             state.answers = action.payload.answers;
             state.details = action.payload.details;
             state.callDetails = action.payload.callDetails;
             state.sac = action.payload.sac;
+        },
+        SET_INIT_TIMER_DATE: (state, action: PayloadAction<Date>) => {
+            state.initedQuizDate = action.payload;
         },
         UPDATE_ANSWER: (
             state,
@@ -63,6 +73,10 @@ export const testCurrentUser = createSlice({
     },
 });
 
-export const { SET_USER_STATE, UPDATE_ANSWER, RESET_USER_STATE } =
-    testCurrentUser.actions;
+export const {
+    SET_USER_STATE,
+    UPDATE_ANSWER,
+    RESET_USER_STATE,
+    SET_INIT_TIMER_DATE,
+} = testCurrentUser.actions;
 export const currentStudentReducer = testCurrentUser.reducer;

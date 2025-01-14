@@ -8,6 +8,7 @@ export interface StudentInformation {
     phone: string;
     city: string;
     state: StudentStates;
+    initedQuizDate?: Date;
     code: string;
     currentQuestion: number;
     dateToCall?: any;
