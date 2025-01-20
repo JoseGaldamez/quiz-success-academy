@@ -23,6 +23,7 @@ export const loginAdmin = async (email: string, password: string) => {
         const user = {
             email: data.email,
             name: data.name,
+            rol: data.rol,
         };
 
         return user;

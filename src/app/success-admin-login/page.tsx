@@ -30,9 +30,9 @@ const SuccessAdminLoginPage = () => {
             setError(false);
             setLoading(false);
 
-            const { email, name } = user as any;
+            const { email, name, rol } = user as any;
 
-            dispatch(SET_AUTH_USER({ email, name }));;
+            dispatch(SET_AUTH_USER({ email, name, rol }));;
             dispatch(SET_AUTH_STATE(true));
             navigateToHome();
         }

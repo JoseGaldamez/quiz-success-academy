@@ -3,11 +3,12 @@
 import React from 'react';
 import styles from "./Common.module.css";
 import Link from 'next/link';
-import { useAppDispatch } from '@/lib/store';
+import { useAppDispatch, useAppSelector } from '@/lib/store';
 import { SET_AUTH_STATE } from '@/lib/slices/authSlice';
 
 export const TopAdminBar = () => {
     const dispatch = useAppDispatch();
+    const user = useAppSelector((state) => state.auth);
 
     const logout = () => {
         localStorage.setItem('authState', 'false');
@@ -24,9 +25,20 @@ export const TopAdminBar = () => {
                         <span className={styles.LogoPrincipalDot}>Admin</span>
                     </div>
                 </span>
-                <button onClick={logout} className={styles.closeButton}>
-                    Cerrar sesión
-                </button>
+                <div className=''>
+                    <ul className='flex items-center justify-end'>
+                        {
+                            user.rol === "admin" && (
+                                <li>
+                                    <Link className={styles.link} href={'/admin/users'}>Users</Link>
+                                </li>
+                            )
+                        }
+                        <button onClick={logout} className={styles.closeButton}>
+                            Cerrar sesión
+                        </button>
+                    </ul>
+                </div>
             </section>
         </div>
     )

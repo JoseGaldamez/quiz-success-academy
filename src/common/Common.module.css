@@ -77,3 +77,12 @@
     margin-left: 20px;
     border-radius: 10px;
 }
+
+.link {
+    margin-right: 20px;
+    text-decoration: underline;
+    opacity: 0.5;
+}
+.link:hover {
+    opacity: 1;
+}

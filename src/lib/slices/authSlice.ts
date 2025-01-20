@@ -6,12 +6,14 @@ export interface IAuthState {
     authState: boolean;
     email?: string;
     name?: string;
+    rol?: string;
 }
 
 const initialState: IAuthState = {
     authState: false,
     email: "",
     name: "",
+    rol: "",
 };
 
 export const authSlice = createSlice({
@@ -23,10 +25,11 @@ export const authSlice = createSlice({
         },
         SET_AUTH_USER: (
             state,
-            action: PayloadAction<{ email: string; name: string }>
+            action: PayloadAction<{ email: string; name: string; rol: string }>
         ) => {
             state.email = action.payload.email;
             state.name = action.payload.name;
+            state.rol = action.payload.rol;
         },
     },
 });

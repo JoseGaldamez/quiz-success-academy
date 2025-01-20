@@ -56,7 +56,7 @@ const HomeAdminPage = () => {
             }
         })
 
-        if (auth.email === "sac@successacademyhn.com") {
+        if (auth.rol === "sac") {
             const orderedArray = checked.sort((a, b) => {
                 const dateA = a.dateToCall ? a.dateToCall.date : "";
                 const dateB = b.dateToCall ? b.dateToCall.date : "";
@@ -123,7 +123,7 @@ const HomeAdminPage = () => {
             <div className='flex justify-between items-center mt-5'>
                 <h3 className='text-xl'>Lista de estudiantes</h3>
                 {
-                    auth.email !== "guest@successacademyhn.com" && (
+                    auth.rol === "admin" && (
                         <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
                     )
                 }
