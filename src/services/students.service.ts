@@ -20,6 +20,20 @@ export const getStudents = async () => {
     }
 };
 
+export const getArchivedStudents = async () => {
+    try {
+        const response = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/archivedStudents.json`
+        );
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        return null;
+    }
+};
+
 export const addNewStudent = async (id: string, user: StudentInformation) => {
     try {
         const response = await fetch(
@@ -169,6 +183,37 @@ export const updateStudentState = async (id: string, state: string) => {
         const data = await response.json();
 
         return data;
+    } catch (error) {
+        return null;
+    }
+};
+
+export const archiveStudentService = async (id: string) => {
+    try {
+        const response = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}.json`
+        );
+
+        const dataStudent = await response.json();
+
+        const archived = await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/archivedStudents/${id}.json`,
+            {
+                method: "PUT",
+                body: JSON.stringify(dataStudent),
+            }
+        );
+
+        const archivedData = await archived.json();
+
+        await fetch(
+            `https://success-academy-test-default-rtdb.firebaseio.com/students/${id}.json`,
+            {
+                method: "DELETE",
+            }
+        );
+
+        return archivedData;
     } catch (error) {
         return null;
     }

@@ -84,6 +84,12 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
 
     const countPoints = () => {
         let points = 0;
+
+
+        if (user.answers === undefined) {
+            return 0;
+        }
+
         Object.keys(user.answers).forEach((key) => {
             points += user.answers[key].points;
         });
@@ -123,7 +129,11 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                             )
                         }
 
-                        <PointByCategory user={user} />
+                        {
+                            user.answers && (
+                                <PointByCategory user={user} />
+                            )
+                        }
 
                         <ExamCallAndComment user={user} />
 
@@ -141,24 +151,24 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                                     <div key={index} className='p-5 my-5 border-b border-slate-400'>
                                         <h3 className='text-lg font-bold'>{index + 1}- {question.title}</h3>
                                         {
-                                            question.type === questionTypes.DETAILS && (
+                                            (question.type === questionTypes.DETAILS && user.answers && user.answers[question["questionCode"]]) && (
                                                 <div className='w-full mt-10 border-b-4 border-orange-700'></div>
                                             )
                                         }
                                         {
-                                            question.type === questionTypes.UNIQUE_SELECTION && (
+                                            (question.type === questionTypes.UNIQUE_SELECTION && user.answers && user.answers[question["questionCode"]]) && (
                                                 <CheckAnswerUniqueQuestion answer={user.answers[question["questionCode"]]} />
                                             )
                                         }
                                         {
-                                            question.type === questionTypes.RECORD && (
+                                            (question.type === questionTypes.RECORD && user.answers && user.answers[question["questionCode"]]) && (
                                                 <CheckAnswerRecordedQuestion
                                                     questionCode={question["questionCode"]}
                                                     updateCheckAnwer={updateCheckAnwer} answer={user.answers[question["questionCode"]]} />
                                             )
                                         }
                                         {
-                                            question.type === questionTypes.WRITTING && (
+                                            (question.type === questionTypes.WRITTING && user.answers && user.answers[question["questionCode"]]) && (
                                                 <CheckAnswerInputQuestion
                                                     questionCode={question["questionCode"]}
                                                     updateCheckAnwer={updateCheckAnwer}
@@ -166,7 +176,7 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                                             )
                                         }
                                         {
-                                            question.type === questionTypes.FREE_WRITE && (
+                                            (question.type === questionTypes.FREE_WRITE && user.answers && user.answers[question["questionCode"]]) && (
                                                 <CheckAnswerInputQuestion questionCode={question["questionCode"]}
                                                     updateCheckAnwer={updateCheckAnwer} answer={user.answers[question["questionCode"]]} />
                                             )
@@ -184,7 +194,11 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
                                 {countPoints()} points
                             </p>
 
-                            <PointByCategory user={user} />
+                            {
+                                user.answers && (
+                                    <PointByCategory user={user} />
+                                )
+                            }
 
                             <p className='mt-5'>
                                 Next Step:

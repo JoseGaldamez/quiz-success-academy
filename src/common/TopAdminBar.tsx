@@ -22,7 +22,9 @@ export const TopAdminBar = () => {
                     <div className='flex items-center'>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img className={styles.LogoPrincipal} src="https://successacademyhn.com/wp-content/uploads/2023/02/logo_succress-blanco-copia.png" alt="logo" />
-                        <span className={styles.LogoPrincipalDot}>Admin</span>
+                        <span className={styles.LogoPrincipalDot}>
+                            <Link href={'/admin/home'}>Admin Home</Link>
+                        </span>
                     </div>
                 </span>
                 <div className=''>
@@ -31,6 +33,13 @@ export const TopAdminBar = () => {
                             user.rol === "admin" && (
                                 <li>
                                     <Link className={styles.link} href={'/admin/users'}>Users</Link>
+                                </li>
+                            )
+                        }
+                        {
+                            user.rol === "admin" && (
+                                <li>
+                                    <Link className={styles.link} href={'/admin/archived'}>Archived</Link>
                                 </li>
                             )
                         }

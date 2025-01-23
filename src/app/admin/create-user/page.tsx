@@ -26,6 +26,10 @@ const CreateUserPage = () => {
             city: { value: string };
         };
 
+        if (target.name.value === '' || target.phone.value === '') {
+            return alert('Los campos con * son requeridos');
+        }
+
 
         const userUUID = uid.rnd();
         const user: StudentInformation = {
@@ -58,7 +62,7 @@ const CreateUserPage = () => {
                 <div className='mt-5 flex justify-between'>
                     <form onSubmit={createUserFromForm} className='w-full pr-10'>
                         <div className='px-5 py-2'>
-                            <label className='block text-sm font-medium text-slate-900'>Nombre completo</label>
+                            <label className='block text-sm font-medium text-slate-900'>Nombre completo *</label>
                             <input type='text' name='name' className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' />
                         </div>
                         <div className='px-5 py-2'>
@@ -74,7 +78,7 @@ const CreateUserPage = () => {
                             <input type='number' name='age' className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' />
                         </div>
                         <div className='px-5 py-2'>
-                            <label className='block text-sm font-medium text-slate-900'>Telefono</label>
+                            <label className='block text-sm font-medium text-slate-900'>Telefono *</label>
                             <input type='text' name='phone' className='mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' />
                         </div>
                         <div className='px-5 py-2'>

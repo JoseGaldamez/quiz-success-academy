@@ -7,11 +7,12 @@ import { useAppDispatch, useAppSelector } from '@/lib/store';
 import { getListOfDates } from './helperCalendar';
 import { DayModel } from '@/models/day.model';
 import { ItemDay } from '@/components/calendar/ItemDay';
-import { setDateToCall } from '@/services/students.service';
+import { setDateToCall, updateStudentState } from '@/services/students.service';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Hour } from '@/components/calendar/Hour';
 import { getDay, registerDayEndHour } from '@/services/days.service';
 import { sendMessage } from '@/services/messages.service';
+import { StudentStates } from '@/types/studentStates.types';
 
 const ChooseCalendarCall = () => {
     const router = useRouter();
@@ -48,7 +49,9 @@ const ChooseCalendarCall = () => {
 
         const dayDate = selectedDay.month + selectedDay.date;
 
-        registerDayEndHour(dayDate, selectedHour, currentStudent.code);
+        await registerDayEndHour(dayDate, selectedHour, currentStudent.code);
+
+        await updateStudentState(currentStudent.code, StudentStates.TO_CALL);
 
         const message = `The student ${currentStudent.name} (${currentStudent.code}) has finished the online quiz and selected the date ${selectedDay.fullDate} at ${selectedHour} for the call.`;
 
