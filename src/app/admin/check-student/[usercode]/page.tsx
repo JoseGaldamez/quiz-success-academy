@@ -98,7 +98,7 @@ const CheckStudent = ({ params }: { params: { usercode: string } }) => {
     }
 
     return (
-        <div className='max-w-5xl mt-10 mx-auto px-10'>
+        <div className='max-w-5xl mt-10 mx-auto py-10'>
             {
                 loading && <p>Cargando...</p>
             }

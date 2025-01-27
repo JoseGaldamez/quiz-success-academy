@@ -43,6 +43,15 @@ export const TopAdminBar = () => {
                                 </li>
                             )
                         }
+                        {
+                            user.rol === "admin" && (
+                                <li>
+                                    <Link className={styles.link} href={'/admin/hours'}>
+                                        Schedules
+                                    </Link>
+                                </li>
+                            )
+                        }
                         <button onClick={logout} className={styles.closeButton}>
                             Cerrar sesión
                         </button>

@@ -128,7 +128,7 @@ const HomeAdminPage = () => {
         <div>
 
 
-            <div className='max-w-5xl mt-10 mx-auto p-10'>
+            <div className='max-w-5xl mt-10 mx-auto py-10'>
                 <div className='flex justify-between'>
                     <h1 className='text-3xl font-bold text-blue-950'>Bienvenido a la página de administrador</h1>
                     <button onClick={getAllStudents}>

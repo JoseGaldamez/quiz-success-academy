@@ -69,7 +69,7 @@ export const ExamCallAndComment = ({ user }: { user: StudentInformation }) => {
     return (
         <div className='pb-10'>
             {
-                (user.state === StudentStates.TO_CALL && called === false) && (
+                ((user.state === StudentStates.TO_CALL || user.state === StudentStates.IN_PROGRESS) && called === false) && (
                     <div>
                         <button type="button" onClick={() => { setcalled(true) }} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mt-5 w-full mb-10'>Llamada realizada</button>
                     </div>
