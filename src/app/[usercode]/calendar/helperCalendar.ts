@@ -1,11 +1,12 @@
 import moment from "moment";
 
-export const getListOfDates = (date: Date) => {
+export const getListOfDates = (date: Date, horarios: any[]) => {
     const today = moment(date);
     const days = [];
 
     for (let i = 1; i <= 7; i++) {
-        const day = getDay(today.clone().add(i, "days").toDate());
+        const day = getDay(today.clone().add(i, "days").toDate(), horarios);
+
         if (day !== null) {
             days.push(day);
         }
@@ -14,7 +15,7 @@ export const getListOfDates = (date: Date) => {
     return days;
 };
 
-const getDay = (date: Date) => {
+const getDay = (date: Date, horarios: any[]) => {
     switch (date.getDay()) {
         case 1:
             return {
@@ -24,14 +25,7 @@ const getDay = (date: Date) => {
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
                 }-${date.getDate()}`,
-                hours: [
-                    "08:00 am - 09:00 am",
-                    "10:00 am - 11:00 am",
-                    "01:00 pm - 02:00 pm",
-                    "02:00 pm - 03:00 pm",
-                    "03:00 pm - 04:00 pm",
-                    "05:00 pm - 06:00 pm",
-                ],
+                hours: horarios[1],
             };
         case 2:
             return {
@@ -41,13 +35,7 @@ const getDay = (date: Date) => {
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
-                hours: [
-                    "11:00 am - 12:00 mm",
-                    "01:00 pm - 02:00 pm",
-                    "02:00 pm - 03:00 pm",
-                    "03:00 pm - 04:00 pm",
-                    "04:00 pm - 05:00 pm",
-                ],
+                hours: horarios[2],
             };
         case 3:
             return {
@@ -57,14 +45,7 @@ const getDay = (date: Date) => {
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
-                hours: [
-                    "08:00 am - 09:00 am",
-                    "10:00 am - 11:00 am",
-                    "01:00 pm - 02:00 pm",
-                    "02:00 pm - 03:00 pm",
-                    "03:00 pm - 04:00 pm",
-                    "05:00 pm - 06:00 pm",
-                ],
+                hours: horarios[3],
             };
         case 4:
             return {
@@ -74,12 +55,7 @@ const getDay = (date: Date) => {
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
-                hours: [
-                    "08:00 am - 09:00 am",
-                    "09:00 am - 10:00 am",
-                    "01:00 pm - 02:00 pm",
-                    "02:00 pm - 03:00 pm",
-                ],
+                hours: horarios[4],
             };
         case 5:
             return {
@@ -89,14 +65,7 @@ const getDay = (date: Date) => {
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
-                hours: [
-                    "08:00 am - 09:00 am",
-                    "10:00 am - 11:00 am",
-                    "01:00 pm - 02:00 pm",
-                    "02:00 pm - 03:00 pm",
-                    "03:00 pm - 04:00 pm",
-                    "05:00 pm - 06:00 pm",
-                ],
+                hours: horarios[5],
             };
         case 6:
             return {
@@ -106,7 +75,7 @@ const getDay = (date: Date) => {
                 fullDate: `${date.getUTCFullYear()}-${
                     date.getUTCMonth() + 1
                 }-${date.getUTCDate()}`,
-                hours: ["05:00 pm - 06:00 pm"],
+                hours: horarios[6],
             };
 
         default:

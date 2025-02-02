@@ -10,7 +10,7 @@ import { ItemDay } from '@/components/calendar/ItemDay';
 import { setDateToCall, updateStudentState } from '@/services/students.service';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Hour } from '@/components/calendar/Hour';
-import { getDay, registerDayEndHour } from '@/services/days.service';
+import { getDay, getHorariosCall, registerDayEndHour } from '@/services/days.service';
 import { sendMessage } from '@/services/messages.service';
 import { StudentStates } from '@/types/studentStates.types';
 
@@ -30,10 +30,17 @@ const ChooseCalendarCall = () => {
         if (currentStudent.code === '') {
             router.push('/');
         }
-        const listDays = getListOfDates(currentDate);
-        setListOfDays(listDays);
+        fullDays();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    const fullDays = async () => {
+        const horarios = await getHorariosCall();
+
+        const listDays = getListOfDates(currentDate, horarios);
+        setListOfDays(listDays);
+
+    }
 
     const handleSetDateToCall = async () => {
 

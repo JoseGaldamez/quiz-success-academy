@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Horario } from './Horario';
 import { getHorariosCall, saveHorarios } from '@/services/days.service';
+import { orderHorarioDay } from './orderDays';
 
 export const Horarios = () => {
 
@@ -37,8 +38,25 @@ export const Horarios = () => {
     };
 
     const handleSaveHours = async () => {
-        const horarios = await saveHorarios(daysSelected);
-        console.log(horarios);
+
+        // order horarios
+        const horariosToSave: { [key: number]: string[] } = {
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: []
+        }
+
+        for (let index = 1; index <= 6; index++) {
+            const element = daysSelected[index];
+            const result = orderHorarioDay(element);
+            horariosToSave[index] = result;
+        }
+
+        const horarios = await saveHorarios(horariosToSave);
+
     }
 
     return (
