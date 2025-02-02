@@ -139,11 +139,8 @@ const HomeAdminPage = () => {
 
                 <div className='flex justify-between items-center mt-5'>
                     <h3 className='text-xl'>Lista de estudiantes</h3>
-                    {
-                        auth.rol === "admin" && (
-                            <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
-                        )
-                    }
+
+                    <Link className='px-5 py-2 rounded-lg bg-orange-400 transition-all hover:bg-orange-600 text-white' href='/admin/create-user'>Nuevo</Link>
                 </div>
 
                 <div className='w-2/3 flex'>
