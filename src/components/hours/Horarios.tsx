@@ -15,6 +15,8 @@ export const Horarios = () => {
         6: []
     });
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
         getHorariosCall().then((horarios) => {
             setdaysSelected(horarios);
@@ -39,6 +41,7 @@ export const Horarios = () => {
 
     const handleSaveHours = async () => {
 
+        setLoading(true);
         // order horarios
         const horariosToSave: { [key: number]: string[] } = {
             1: [],
@@ -55,8 +58,8 @@ export const Horarios = () => {
             horariosToSave[index] = result;
         }
 
-        const horarios = await saveHorarios(horariosToSave);
-
+        await saveHorarios(horariosToSave);
+        setLoading(false);
     }
 
     return (
@@ -68,7 +71,7 @@ export const Horarios = () => {
             <Horario day={5} selectedDays={daysSelected[5]} handleSelectHour={handleSelectHour} />
             <Horario day={6} selectedDays={daysSelected[6]} handleSelectHour={handleSelectHour} />
 
-            <button onClick={handleSaveHours} className="bg-orange-500 hover:bg-orange-600 text-white w-full py-5 text-lg font-bold mt-5 rounded-xl">Guardar horarios</button>
+            <button disabled={loading} onClick={handleSaveHours} className="bg-orange-500 hover:bg-orange-600 text-white w-full py-5 text-lg font-bold mt-5 rounded-xl disabled:bg-gray-400">Guardar horarios</button>
         </>
     );
 }
