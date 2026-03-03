@@ -17,12 +17,18 @@ const days = [
 
 export const Horario = ({ day, selectedDays, handleSelectHour }: HorarioProps) => {
 
+
+    if(selectedDays == null){
+        selectedDays = [];
+    }
+
     return (
         <section>
             <div className='flex justify-between items-center mt-10'>
                 <h3 className='text-xl font-bold'>{days[day - 1]}</h3>
             </div>
-            <div className='flex flex-wrap gap-2 mt-5 justify-between pb-5'>
+            <div className='grid grid-cols-4 md:grid-cols-8 gap-2 mt-5 justify-between pb-5'>
+
                 <div onClick={() => {
                     handleSelectHour(day, '08:00 am - 09:00 am');
                 }} className={`${selectedDays.includes('08:00 am - 09:00 am') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>08:00 am</div>
@@ -62,6 +68,31 @@ export const Horario = ({ day, selectedDays, handleSelectHour }: HorarioProps) =
                 <div onClick={() => {
                     handleSelectHour(day, '05:00 pm - 06:00 pm');
                 }} className={`${selectedDays.includes('05:00 pm - 06:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>05:00 pm</div>
+
+                <div onClick={() => {
+                    handleSelectHour(day, '06:00 pm - 07:00 pm');
+                }} className={`${selectedDays.includes('06:00 pm - 07:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>06:00 pm</div>  
+
+                <div onClick={() => {
+                    handleSelectHour(day, '07:00 pm - 08:00 pm');
+                }} className={`${selectedDays.includes('07:00 pm - 08:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>07:00 pm</div>
+
+                <div onClick={() => {
+                    handleSelectHour(day, '08:00 pm - 09:00 pm');
+                }} className={`${selectedDays.includes('08:00 pm - 09:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>08:00 pm</div>
+
+                <div onClick={() => {
+                    handleSelectHour(day, '09:00 pm - 10:00 pm');
+                }} className={`${selectedDays.includes('09:00 pm - 10:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>09:00 pm</div>
+
+                <div onClick={() => {
+                    handleSelectHour(day, '10:00 pm - 11:00 pm');
+                }} className={`${selectedDays.includes('10:00 pm - 11:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>10:00 pm</div>
+
+                <div onClick={() => {
+                    handleSelectHour(day, '11:00 pm - 12:00 pm');
+                }} className={`${selectedDays.includes('11:00 pm - 12:00 pm') ? 'bg-orange-400 text-white' : 'bg-gray-200'} p-2 rounded-md cursor-pointer`}>11:00 pm</div>
+
             </div>
             <hr />
         </section>
