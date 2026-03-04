@@ -87,7 +87,7 @@ export const MenuBar = ({ showRequestAccessButton = true, timerInitDate }: IMenu
                 }
                 {
                     timerInitDate && (
-                        <span>{buildTimerString(leftTime)}</span>
+                        <span className={styles.timerContainer}>{buildTimerString(leftTime)}</span>
                     )
                 }
             </section>

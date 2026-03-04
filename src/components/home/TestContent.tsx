@@ -5,24 +5,39 @@ import Link from 'next/link';
 export const TestContent = () => {
     return (
         <section className={styles.testContentSection}>
-            <h3>¿Cómo es la prueba?</h3>
-            <h2>Nuestra prueba de inglés incluye</h2>
-            <div className={styles.testElements}>
-                <article>
-                    <h4>Gramática</h4>
-                    <p>Comprueba que conocer la gramática al escribir bien en inglés.</p>
+            <div className={styles.testHeader}>
+                <h3 className={styles.testSubtitle}>¿Cómo es la prueba?</h3>
+                <h2 className={styles.testTitle}>Nuestra prueba de inglés incluye</h2>
+            </div>
+            
+            <div className={styles.testGrid}>
+                <article className={styles.testCard}>
+                    <div className={styles.cardHeader}>
+                        <div className={styles.iconWrapper}>✍️</div>
+                        <h4 className={styles.cardTitle}>Gramática</h4>
+                    </div>
+                    <p className={styles.cardDesc}>Comprueba que conoces la gramática al escribir correctamente en inglés.</p>
                 </article>
-                <article>
-                    <h4>Escucha</h4>
-                    <p>Entiendes cuando escuchar una conversación en inglés.</p>
+                <article className={styles.testCard}>
+                    <div className={styles.cardHeader}>
+                        <div className={styles.iconWrapper}>🎧</div>
+                        <h4 className={styles.cardTitle}>Escucha</h4>
+                    </div>
+                    <p className={styles.cardDesc}>Demuestra que entiendes al escuchar una conversación en inglés.</p>
                 </article>
-                <article>
-                    <h4>Pronunciación</h4>
-                    <p>Saber como pronunciar bien cada palabra y entonación al hablar.</p>
+                <article className={styles.testCard}>
+                    <div className={styles.cardHeader}>
+                        <div className={styles.iconWrapper}>🗣️</div>
+                        <h4 className={styles.cardTitle}>Pronunciación</h4>
+                    </div>
+                    <p className={styles.cardDesc}>Saber cómo pronunciar bien cada palabra y la entonación correcta al hablar.</p>
                 </article>
-                <article>
-                    <h4>Ortografía</h4>
-                    <p>Recuerdas como escribir cada palabra que sabes en inglés.</p>
+                <article className={styles.testCard}>
+                    <div className={styles.cardHeader}>
+                        <div className={styles.iconWrapper}>📝</div>
+                        <h4 className={styles.cardTitle}>Ortografía</h4>
+                    </div>
+                    <p className={styles.cardDesc}>Demuestra que recuerdas cómo escribir cada palabra que sabes en inglés.</p>
                 </article>
             </div>
 

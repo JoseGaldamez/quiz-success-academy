@@ -4,117 +4,281 @@
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
+    min-height: 90vh;
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 5rem;
-    padding-top: 5rem;
+    gap: 3rem;
+    padding: 5rem 5% 2rem 5%;
 }
 
-.section div {
-    width: 30%;
-    object-fit: cover;
+.textContent {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.imageContent {
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.heroImage {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    object-fit: contain;
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
 }
 
 .subtitle {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     color: var(--primary-orange);
-    margin-bottom: 1rem;
-    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
 }
 
 .title {
-    font-size: 3.5rem;
-    line-height: 4.5rem;
+    font-size: 4rem;
+    line-height: 1.1;
     color: var(--primary-blue);
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     font-weight: 900;
 }
+
 .titleUnderline {
-    border-bottom: solid 5px var(--primary-orange);
+    border-bottom: solid 6px var(--primary-orange);
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 .info {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
     color: var(--primary-blue);
-    margin-bottom: 2rem;
+    opacity: 0.85;
+    margin-bottom: 2.5rem;
+}
+
+.buttonContainer {
+    width: 100%;
 }
 
 .buttonStart {
     background-color: var(--secondary-blue);
     color: white;
-    padding: 1rem 2rem;
+    padding: 1rem 2.5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 50px;
     font-size: 1.2rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s;
-    width: 100%;
-    display: block;
+    transition: all 0.3s ease;
+    display: inline-block;
     text-align: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+    width: fit-content;
 }
 
 .buttonStart:hover {
     background-color: var(--primary-orange);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 992px) {
+    .section {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 8rem;
+        padding-bottom: 4rem;
+        height: auto;
+        gap: 2rem;
+    }
+
+    .textContent, .imageContent {
+        width: 90%;
+        align-items: center;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .title {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .info {
+        font-size: 1rem;
+    }
+
+    .heroImage {
+        max-width: 90%;
+    }
+
+    .buttonStart {
+        width: 100%;
+        max-width: 300px;
+    }
 }
 
 .testContentSection {
     background-color: var(--primary-blue);
     color: white;
-    padding: 5rem 0;
+    padding: 6rem 5%;
+    position: relative;
+    overflow: hidden;
+}
+
+.testHeader {
     text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
 }
 
-.testContentSection h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.testContentSection h3 {
+.testSubtitle {
     font-size: 1.2rem;
-    margin-bottom: 1rem;
     color: var(--secondary-orange);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
-.testElements {
-    max-width: 720px;
+.testTitle {
+    font-size: 3rem;
+    line-height: 1.2;
+    font-weight: 900;
+}
+
+.testGrid {
+    max-width: 1200px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.testCard {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    transition: all 0.4s ease;
     display: flex;
-    gap: 2%;
+    flex-direction: column;
+    height: 100%;
+}
+
+.testCard:hover {
+    transform: translateY(-10px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary-orange);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.iconWrapper {
+    font-size: 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    border-radius: 15px;
+    flex-shrink: 0;
 }
 
-.testElements article {
-    background-color: rgba(255, 255, 255, 0.1);
-    padding: 2rem;
-    border-radius: 10px;
-    margin-bottom: 2%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 46%;
+.cardTitle {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
 }
 
-.testElements article h4 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+.cardDesc {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
 }
 
 .requestAccessButton {
     background-color: var(--primary-orange);
     color: white;
-    padding: 1rem 1rem;
+    padding: 1.2rem 3rem;
     border: none;
-    border-radius: 20px;
-    font-size: 1.2rem;
+    border-radius: 50px;
+    font-size: 1.3rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s;
-    width: 350px;
-    margin: 40px auto;
+    transition: all 0.3s ease;
     display: block;
+    width: fit-content;
+    margin: 5rem auto 0;
     text-align: center;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
+
 .requestAccessButton:hover {
     background-color: var(--secondary-orange);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Add mobile query adjustments specifically for TestContent */
+@media (max-width: 768px) {
+    .testContentSection {
+        padding: 4rem 5%;
+    }
+    
+    .testTitle {
+        font-size: 2.2rem;
+    }
+    
+    .testGrid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .testCard {
+        padding: 2rem 1.5rem;
+    }
+    
+    .requestAccessButton {
+        width: 100%;
+        max-width: 350px;
+        padding: 1rem 2rem;
+    }
 }
 
 .pricesSection {
