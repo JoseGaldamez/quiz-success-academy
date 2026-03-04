@@ -32,7 +32,11 @@ const SuccessAdminLoginPage = () => {
 
             const { email, name, rol } = user as any;
 
-            dispatch(SET_AUTH_USER({ email, name, rol }));;
+            // Save to localStorage for persistence
+            localStorage.setItem('authState', 'true');
+            localStorage.setItem('authUser', JSON.stringify({ email, name, rol }));
+
+            dispatch(SET_AUTH_USER({ email, name, rol }));
             dispatch(SET_AUTH_STATE(true));
             navigateToHome();
         }

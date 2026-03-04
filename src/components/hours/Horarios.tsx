@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Horario } from './Horario';
 import { getHorariosCall, saveHorarios } from '@/services/days.service';
 import { orderHorarioDay } from './orderDays';
+import toast from 'react-hot-toast';
 
 export const Horarios = () => {
 
@@ -19,11 +20,15 @@ export const Horarios = () => {
 
     useEffect(() => {
         getHorariosCall().then((horarios) => {
+            console.log({ horarios });
+
             setdaysSelected(horarios);
         });
     }, []);
 
     const handleSelectHour = (day: number, hour: string) => {
+
+        console.log({ day, hour });
 
         if (daysSelected[day].includes(hour)) {
             setdaysSelected({
@@ -33,33 +38,42 @@ export const Horarios = () => {
             return;
         }
 
-        setdaysSelected({
+        const newHorarios = {
             ...daysSelected,
             [day]: [...daysSelected[day], hour]
-        });
+        };
+
+        console.log({ newHorarios });
+
+        setdaysSelected(newHorarios);
     };
 
     const handleSaveHours = async () => {
 
         setLoading(true);
-        // order horarios
-        const horariosToSave: { [key: number]: string[] } = {
-            1: [],
-            2: [],
-            3: [],
-            4: [],
-            5: [],
-            6: []
-        }
+        const toastId = toast.loading('Guardando horarios...');
+        
+        try {
+            // order horarios
+            const horariosToSave: { [key: number]: string[] } = {
+                1: daysSelected[1],
+                2: daysSelected[2],
+                3: daysSelected[3],
+                4: daysSelected[4],
+                5: daysSelected[5],
+                6: daysSelected[6]
+            }
 
-        for (let index = 1; index <= 6; index++) {
-            const element = daysSelected[index];
-            const result = orderHorarioDay(element);
-            horariosToSave[index] = result;
-        }
+            console.log({ horariosToSave });
 
-        await saveHorarios(horariosToSave);
-        setLoading(false);
+            await saveHorarios(horariosToSave);
+            toast.success('Horarios guardados correctamente.', { id: toastId });
+        } catch (error) {
+            console.error(error);
+            toast.error('Error al guardar los horarios.', { id: toastId });
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
