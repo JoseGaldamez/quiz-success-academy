@@ -76,20 +76,22 @@ export const RecordQuestion = ({ question, setButtonDisable, studentCode }: IRec
             },
         })
             .then(async (response) => {
+                if (!response.data.success) {
+                    alert("No speech detected, please try saving again or record again.");
+                    return;
+                }
+
                 // handle the response
                 setResultData(response.data.result.privPronJson);
 
-                if (response.data.urlAudio !== null) {
+                await updateStudentAnswers(studentCode, question.questionCode, {
+                    type: questionTypes.RECORD,
+                    response: response.data.result.privPronJson,
+                    urlAudio: response.data.urlAudio || null,
+                    points: 0,
+                });
 
-                    await updateStudentAnswers(studentCode, question.questionCode, {
-                        type: questionTypes.RECORD,
-                        response: response.data.result.privPronJson,
-                        urlAudio: response.data.urlAudio,
-                        points: 0,
-                    });
-
-                    setButtonDisable(false);
-                }
+                setButtonDisable(false);
                 // TODO: Save response on firebase
             })
             .catch((error) => {

@@ -48,11 +48,7 @@ export async function POST(request: Request) {
                 );
             result = resultado;
         } else {
-            return Response.json({
-                status: "Done",
-                success: false,
-                result: "Try again!",
-            });
+            result = "Try again!";
         }
     });
 
@@ -61,6 +57,14 @@ export async function POST(request: Request) {
     }
 
     reco.close();
+
+    if (result === "Try again!") {
+        return Response.json({
+            status: "Done",
+            success: false,
+            result: "Try again!",
+        });
+    }
 
     const responseSaved = await updateAudioFile(
         questionCode,
